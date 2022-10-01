@@ -6,6 +6,8 @@
       "dom.iterable",
       "esnext"
     ],
+    "plugins": [{ "name": "typescript-plugin-scss-modules" }],
+    "include": ["src/**/*.ts", "declarations.d.ts"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
