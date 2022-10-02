@@ -13,17 +13,17 @@ export const MenuLayoutTop:Menu[]=[
     },
     {
         id:2,
-        name:'Trang chủ',
+        name:'Giải pháp',
         router:'/'
     },
     {
         id:3,
-        name:'Trang chủ',
+        name:'Công ty',
         router:'/'
     },
     {
         id:4,
-        name:'Trang chủ',
+        name:'Hướng dẫn hoạt động',
         router:'/'
     }
 ]
