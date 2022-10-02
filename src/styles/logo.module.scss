@@ -1,0 +1,58 @@
+.logo {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .logo_box_image {
+    height: 350px;
+    width: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    .logo_image {
+      height: 300px;
+      animation: logo ease 2s infinite;
+    }
+  }
+  .animations_logo1 {
+    animation: zoomInZoomOut 1s ease infinite;
+  }
+  .animations_logo2 {
+    animation: zoomInZoomOut 1s ease infinite;
+    animation-delay: 0.25s;
+  }
+  .animations_logo3 {
+    animation: zoomInZoomOut 1s ease infinite;
+    animation-delay: 0.5s;
+  }
+  .animations_logo4 {
+    animation: zoomInZoomOut 1s ease infinite;
+    animation-delay: 0.75s;
+  }
+}
+
+@keyframes logo {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.3, 1.3);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes zoomInZoomOut {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.5, 1.5);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
