@@ -1,6 +1,7 @@
 import { Button, Drawer, Form, Space, Typography } from "antd";
 import Input from "antd/lib/input/Input";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -16,6 +17,7 @@ interface SubmitForm {
 
 function Login(props: LoginProps) {
   const { openLogin, setOpenLogin } = props;
+  const navigate = useNavigate();
   const [loading, setLoading] = React.useState<boolean>(false);
   const onClose = () => {
     setOpenLogin(false);
@@ -27,6 +29,7 @@ function Login(props: LoginProps) {
     setTimeout(() => {
       setLoading(false);
       setOpenLogin(false);
+      navigate("/home");
     }, 1000);
   };
   return (

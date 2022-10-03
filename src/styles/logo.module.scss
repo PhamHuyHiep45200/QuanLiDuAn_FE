@@ -13,22 +13,22 @@
     overflow: hidden;
     .logo_image {
       height: 300px;
-      animation: logo ease 2s infinite;
+      animation: logo ease 3s infinite;
     }
   }
   .animations_logo1 {
-    animation: zoomInZoomOut 1s ease infinite;
+    animation: zoomInZoomOut 1.5s ease infinite;
   }
   .animations_logo2 {
-    animation: zoomInZoomOut 1s ease infinite;
+    animation: zoomInZoomOut 1.5s ease infinite;
     animation-delay: 0.25s;
   }
   .animations_logo3 {
-    animation: zoomInZoomOut 1s ease infinite;
+    animation: zoomInZoomOut 1.5s ease infinite;
     animation-delay: 0.5s;
   }
   .animations_logo4 {
-    animation: zoomInZoomOut 1s ease infinite;
+    animation: zoomInZoomOut 1.5s ease infinite;
     animation-delay: 0.75s;
   }
 }

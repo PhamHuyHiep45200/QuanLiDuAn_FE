@@ -16,7 +16,7 @@ function LayoutTop() {
   useEffect(() => {
     setTimeout(() => {
       setIsLogo(true);
-    }, 4000);
+    }, 3000);
   }, []);
   return (
     <>

@@ -22,3 +22,45 @@
     }
   }
 }
+
+.layouts {
+  min-height: 100vh;
+  :global {
+    .ant-layout-sider {
+      background-color: white;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 5px 3px 4px #3333;
+    }
+    .ant-menu-item:hover {
+      background-color: #f2f2f2;
+    }
+    .ant-layout-sider-zero-width-trigger {
+      border-radius: 50%;
+      top: 46px;
+      right: -27px;
+      width: 42px;
+    }
+    .ant-tabs > .ant-tabs-nav,
+    .ant-tabs > div > .ant-tabs-nav {
+      margin: 0;
+      margin-left: 20px;
+    }
+  }
+  .notifycation {
+    font-size: 1.6rem;
+    color: #7c8791;
+  }
+  :global {
+    .ant-layout-sider-children {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal)
+      .ant-menu-item-selected {
+      background-color: rgba(134, 134, 134, 0.1);
+      border-left: 3px solid #999;
+    }
+  }
+}
