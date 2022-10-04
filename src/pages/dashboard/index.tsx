@@ -1,6 +1,10 @@
 import React from "react";
-import { Skeleton, Typography } from "antd";
-const { Text } = Typography;
+import LoadingDashboard from "./components/LoadingDashboard";
+import EmptyData from "./components/EmptyData";
+import DashBoardContent from "./components/DashBoardContent";
+
+const data = [];
+
 function Dashboard() {
   const [loading, setLoading] = React.useState<boolean>(true);
   React.useEffect(() => {
@@ -10,11 +14,11 @@ function Dashboard() {
   });
   return (
     <>
-      <Skeleton active loading={loading} />
-      <Skeleton active loading={loading} />
-      <Skeleton active loading={loading} />
-      <Skeleton active loading={loading} />
-      {!loading && <Text strong>dashboard</Text>}
+      {loading ? (
+        <LoadingDashboard loading={loading} />
+      ) : (
+        <> {data.length > 0 ? <DashBoardContent /> : <EmptyData />}</>
+      )}
     </>
   );
 }
