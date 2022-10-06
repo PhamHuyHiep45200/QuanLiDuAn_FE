@@ -3,7 +3,7 @@ import LoadingDashboard from "./components/LoadingDashboard";
 import EmptyData from "./components/EmptyData";
 import DashBoardContent from "./components/DashBoardContent";
 
-const data = [];
+const data = ['j'];
 
 function Dashboard() {
   const [loading, setLoading] = React.useState<boolean>(true);
