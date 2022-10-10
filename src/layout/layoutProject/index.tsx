@@ -10,7 +10,7 @@ import Headers from "./Headers";
 
 const { Content, Footer, Sider } = Layout;
 
-const LayoutHome = () => {
+const LayoutProject = () => {
   return (
     <Layout className={styles.layouts}>
       <Sider
@@ -47,4 +47,4 @@ const LayoutHome = () => {
   );
 };
 
-export default LayoutHome;
+export default LayoutProject;

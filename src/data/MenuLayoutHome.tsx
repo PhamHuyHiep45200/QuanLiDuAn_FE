@@ -6,13 +6,13 @@ export const MenuLayoutHome = () => {
     {
       key: 1,
       label: "Home",
-      path: "/",
+      path: "/home",
       icon: <HomeOutlined />,
     },
     {
       key: 2,
       label: "Notifycations",
-      path: "/",
+      path: "/home",
       icon: <BellOutlined />,
     },
   ];
