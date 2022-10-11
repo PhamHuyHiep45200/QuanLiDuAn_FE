@@ -1,35 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { Image, Menu, Space, Divider, Typography } from "antd";
+import { Image, Menu, Space, Divider, Typography, Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { FolderOpenOutlined } from "@ant-design/icons";
+import { FolderOpenOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import Logo from "../../assets/image/logoShash.png";
 import { MenuLayoutHome } from "../../data/MenuLayoutHome";
 import styles from "../../styles/layout.module.scss";
-import FolderProject from "./FolderProject";
 const { Text } = Typography;
 
 const data = [
   {
-    id: "1",
-    name: "project 1",
-    icon: <FolderOpenOutlined />,
+    id: 1,
+    name: "Project",
+    actions: "",
   },
   {
-    id: "2",
-    name: "project 2",
-    icon: <FolderOpenOutlined />,
+    id: 2,
+    name: "Group",
+    actions: "",
   },
   {
-    id: "3",
-    name: "project 3",
-    icon: <FolderOpenOutlined />,
+    id: 3,
+    name: "List Task",
+    actions: "",
+  },
+  {
+    id: 4,
+    name: "Task",
+    actions: "",
   },
 ];
 
 function Slider() {
   const items = MenuLayoutHome();
   const navigate = useNavigate();
-  const [menuFolderProject, setMenuFolderProject] = useState<Array<any>>([]);
 
   const changePath = (value: any) => {
     console.log("value", value);
@@ -48,10 +51,6 @@ function Slider() {
       return 0;
     });
   };
-
-  useEffect(() => {
-    setMenuFolderProject(data);
-  }, []);
 
   return (
     <>
@@ -72,11 +71,20 @@ function Slider() {
           onClick={changePath}
           items={items}
         />
-        <Divider>PROJECT</Divider>
-        <FolderProject
-          menuFolderProject={menuFolderProject}
-          setMenuFolderProject={setMenuFolderProject}
-        />
+        <Divider>Share Task</Divider>
+        <Space direction="vertical" style={{ width: "100%" }}>
+          {data.map((item) => (
+            <div key={item.id}>
+              <Space style={{ width: "100%", justifyContent: "center" }}>
+                <Button style={{ display: "flex", alignItems: "center" }}>
+                  <PlusCircleOutlined />
+                  {item.name}
+                </Button>
+              </Space>
+              <Divider />
+            </div>
+          ))}
+        </Space>
       </div>
     </>
   );

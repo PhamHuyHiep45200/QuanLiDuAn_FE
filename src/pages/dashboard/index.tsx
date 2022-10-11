@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import LoadingDashboard from "./components/LoadingDashboard";
 import EmptyData from "./components/EmptyData";
 import DashBoardContent from "./components/DashBoardContent";
+import AddEvent from "../../common/AddEvent";
 
 const data = [
   {

@@ -1,13 +1,26 @@
-.card {
-  border-radius: 8px;
-  min-height: 140px;
-  cursor: pointer;
-  &:hover {
-    transition: all 0.4s ease;
-    box-shadow: 5px 3px 4px #3333;
+.rowContent {
+  border: 1px solid #d1d1d199;
+  padding: 20px 0 10px;
+  position: relative;
+  margin-bottom: 50px;
+  .div_row_content {
+    position: absolute;
+    top: -8%;
+    left: 3%;
+    padding: 2px 20px;
+    background-color: #f0f2f5;
   }
-  .name_Project {
-    display: block;
-    margin-bottom: 10px;
+  .card {
+    border-radius: 8px;
+    min-height: 140px;
+    cursor: pointer;
+    &:hover {
+      transition: all 0.4s ease;
+      box-shadow: 5px 3px 4px #3333;
+    }
+    .name_Project {
+      display: block;
+      margin-bottom: 10px;
+    }
   }
 }

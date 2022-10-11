@@ -110,9 +110,9 @@ function List() {
       <Table
         columns={columns}
         dataSource={data}
-        // defaultExpandAllRows
-        // defaultExpandedRowKeys=
-        expandable={{ expandedRowKeys: [...stateDefault] }}
+        defaultExpandAllRows
+        // // defaultExpandedRowKeys=
+        // expandable={{ expandedRowKeys: [...stateDefault] }}
       />
       <Modal
         title="Basic Modal"
