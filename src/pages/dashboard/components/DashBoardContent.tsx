@@ -9,6 +9,10 @@ import {
   BranchesOutlined,
 } from "@ant-design/icons";
 import DataGetListTask from "../../../data/DataGetListTask";
+import Project from "../../../common/Project";
+import Group from "../../../common/Group";
+import ListTask from "../../../common/ListTask";
+import Task from "../../../common/Task";
 
 const { Text } = Typography;
 
@@ -32,57 +36,67 @@ function DashBoardContent(props: DashBoardContentProps) {
   const dataMockList = useMemo(() => DataGetListTask(), []);
   const GetIcon = (type: string) => {
     if (type === "PROJECT") {
-      return <FolderOpenOutlined style={{ marginBottom: "6px" }} />;
+      return (
+        <FolderOpenOutlined
+          style={{ marginBottom: "6px", color: getColor(type) }}
+        />
+      );
     } else if (type === "GROUP") {
-      return <TeamOutlined style={{ marginBottom: "6px" }} />;
+      return (
+        <TeamOutlined style={{ marginBottom: "6px", color: getColor(type) }} />
+      );
     } else if (type === "LISTTASK") {
-      return <UnorderedListOutlined style={{ marginBottom: "6px" }} />;
+      return (
+        <UnorderedListOutlined
+          style={{ marginBottom: "6px", color: getColor(type) }}
+        />
+      );
     } else if (type === "TASK") {
-      return <BranchesOutlined style={{ marginBottom: "6px" }} />;
+      return (
+        <BranchesOutlined
+          style={{ marginBottom: "6px", color: getColor(type) }}
+        />
+      );
     }
   };
+  const getColor = (colorType: string) => {
+    if (colorType === "PROJECT") {
+      return "red";
+    } else if (colorType === "GROUP") {
+      return "blue";
+    } else if (colorType === "LISTTASK") {
+      return "green";
+    } else if (colorType === "TASK") {
+      return "#e300c7";
+    }
+  };
+
+  const getList = (typeList: string, index: number, data: any) => {
+    if (typeList === "PROJECT") {
+      return <Project id={index} data={data} getName={getName} />;
+    } else if (typeList === "GROUP") {
+      return <Group id={index} data={data} getName={getName} />;
+    } else if (typeList === "LISTTASK") {
+      return <ListTask id={index} data={data} getName={getName} />;
+    } else if (typeList === "TASK") {
+      return <Task id={index} data={data} getName={getName} />;
+    }
+  };
+  console.log(dataMockList);
+
   return (
     <>
       {dataMockList.map((mock, index) => (
         <Row gutter={32} className={styles.rowContent} key={index}>
-          <Space className={styles.div_row_content}>
+          <Space className={styles.div_row_content} style={{ color: "red" }}>
             {GetIcon(mock.type)}
-            {mock.name}
+            <Text strong style={{ color: getColor(mock.type) }}>
+              {mock.name}
+            </Text>
           </Space>
-          {mock?.data?.map((data: any) => (
-            <Col
-              xl={6}
-              lg={8}
-              sm={12}
-              xs={24}
-              key={data.id}
-              style={{ marginBottom: "10px" }}
-            >
-              <Card
-                className={styles.card}
-                // onClick={() => handleRedirectProject(data)}
-              >
-                <Space direction="vertical">
-                  <Text strong className={styles.name_Project}>
-                    {data.name}
-                  </Text>
-                  {data?.assign?.length > 0 ? (
-                    <Avatar.Group maxCount={4} size="large">
-                      {data?.assign?.map((user: any) => (
-                        <Avatar key={user?.id} size="large">
-                          {user?.thumbnailUrl
-                            ? user?.thumbnailUrl
-                            : getName(user?.name)}
-                        </Avatar>
-                      ))}
-                    </Avatar.Group>
-                  ) : (
-                    <Text type="secondary"> Chưa có thành viên...</Text>
-                  )}
-                </Space>
-              </Card>
-            </Col>
-          ))}
+          {mock?.data?.map((data: any, index: number) =>
+            getList(mock.type, index, data)
+          )}
         </Row>
       ))}
     </>
@@ -90,4 +104,3 @@ function DashBoardContent(props: DashBoardContentProps) {
 }
 
 export default DashBoardContent;
-// DataGetListTask;
