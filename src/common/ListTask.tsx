@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, Card, Col, Space, Typography } from "antd";
 import styles from "../styles/project.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
@@ -12,6 +13,7 @@ interface ListTaskProps {
 
 function ListTask(props: ListTaskProps) {
   const { id, data, getName } = props;
+  const navigate = useNavigate();
   return (
     <Col
       xl={18}
@@ -21,10 +23,7 @@ function ListTask(props: ListTaskProps) {
       key={id}
       style={{ marginBottom: "10px" }}
     >
-      <Card
-        className={styles.card}
-        // onClick={() => handleRedirectProject(data)}
-      >
+      <Card className={styles.card} onClick={() => navigate("/home/task")}>
         <Space>
           <Text strong className={styles.name_Project}>
             {data.name}

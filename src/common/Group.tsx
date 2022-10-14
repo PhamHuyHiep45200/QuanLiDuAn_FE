@@ -1,6 +1,7 @@
 import React from "react";
-import { Avatar, Card, Col, Space, Typography } from "antd";
+import { Avatar, Button, Card, Col, Space, Typography } from "antd";
 import styles from "../styles/project.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
@@ -12,19 +13,17 @@ interface GroupProps {
 
 function Group(props: GroupProps) {
   const { id, data, getName } = props;
+  const navigate = useNavigate();
   return (
     <Col
-      xl={9}
-      lg={16}
+      xl={8}
+      lg={12}
       sm={20}
       xs={24}
       key={id}
       style={{ marginBottom: "10px" }}
     >
-      <Card
-        className={styles.card}
-        // onClick={() => handleRedirectProject(data)}
-      >
+      <Card className={styles.card} onClick={() => navigate("/home/list")}>
         <Space direction="vertical">
           <Text strong className={styles.name_Project}>
             {data.name}

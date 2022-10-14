@@ -1,9 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Board from "../pages/board";
+import Dashboard from "../pages/dashboard";
+import Group from "../pages/group";
 import Home from "../pages/home";
 import List from "../pages/list";
-import Project from "../pages/project";
+import Task from "../pages/task";
 import Top from "../pages/top";
 // interface Router {
 //   path: string;
@@ -17,18 +18,22 @@ const routers = [
   {
     path: "/home",
     component: Home,
-  },
-  {
-    path: "/project/:id",
-    component: Project,
     children: [
       {
-        path: "/project/:id/list",
+        path: "/home",
+        component: Dashboard,
+      },
+      {
+        path: "/home/group",
+        component: Group,
+      },
+      {
+        path: "/home/list",
         component: List,
       },
       {
-        path: "/project/:id/board",
-        component: Board,
+        path: "/home/task",
+        component: Task,
       },
     ],
   },

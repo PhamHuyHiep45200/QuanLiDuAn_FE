@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import LoadingDashboard from "../../common/LoadingDashboard";
-import Lists from "./components";
+import Tasks from "./components/Tasks";
 
-function List() {
+function Task() {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
@@ -10,7 +10,7 @@ function List() {
       setLoading(false);
     }, 500);
   }, []);
-  return <>{loading ? <LoadingDashboard loading={loading} /> : <Lists />}</>;
+  return <>{loading ? <LoadingDashboard loading={loading} /> : <Tasks />}</>;
 }
 
-export default List;
+export default Task;

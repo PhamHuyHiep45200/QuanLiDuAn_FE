@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoadingDashboard from "./components/LoadingDashboard";
+import LoadingDashboard from "../../common/LoadingDashboard";
 import EmptyData from "./components/EmptyData";
 import DashBoardContent from "./components/DashBoardContent";
 import AddEvent from "../../common/AddEvent";
@@ -75,7 +75,7 @@ function Dashboard() {
     setTimeout(() => {
       setDataProject(data);
       setLoading(false);
-    }, 2000);
+    }, 500);
   });
   return (
     <>
