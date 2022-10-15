@@ -14,7 +14,7 @@ const data = [
   },
   {
     id: 3,
-    color: "#f5f5f5",
+    color: "rgb(199 199 199)",
     name: "Chưa làm",
   },
 ];
@@ -45,7 +45,6 @@ function StatusTask() {
               height: "10px",
               display: "block",
               marginRight: "0.5rem",
-              boxShadow: "0 0 1px 1px rgb(159 159 159 / 60%)",
               borderRadius: "2px",
             }}
           ></span>
@@ -61,7 +60,6 @@ function StatusTask() {
           background: color,
           width: "10px",
           height: "10px",
-          boxShadow: "0 0 1px 1px rgb(159 159 159 / 60%)",
           cursor: "pointer",
           borderRadius: "2px",
         }}

@@ -1,0 +1,17 @@
+.avatar {
+  .iconAvartar {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #9999;
+    display: none;
+    cursor: pointer;
+  }
+  &:hover .iconAvartar {
+    display: flex;
+  }
+}

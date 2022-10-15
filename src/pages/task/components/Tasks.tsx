@@ -11,17 +11,20 @@ import {
   Popover,
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { ShareAltOutlined, UserAddOutlined } from "@ant-design/icons";
+import {
+  ShareAltOutlined,
+  UserAddOutlined,
+  CloseOutlined,
+  FireOutlined,
+} from "@ant-design/icons";
 import StatusTask from "../../../common/StatusTask";
 import DatePicker from "antd/es/date-picker";
+import styles from "../../../styles/task.module.scss";
 
 const { Text } = Typography;
 
 interface DataType {
   key: React.Key;
-  name: string;
-  age: number;
-  address: string;
   description?: string;
   children?: any;
 }
@@ -29,56 +32,42 @@ interface DataType {
 const data: DataType[] = [
   {
     key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
+    description: "Task này là task thứ nhất",
     children: [
       {
-        name: "hiep",
-        age: 18,
+        description: "Task này là taskok",
         children: [
-          { name: "hiep", age: 18 },
-          { name: "dung", age: 17 },
+          {
+            description: "Task này là task thứ nhất lần 1",
+          },
+          {
+            description: "Task này là task thứ nhất lần 2",
+          },
         ],
       },
-      { name: "dung", age: 17 },
+      {
+        description: "Task này là task hôm nay",
+      },
     ],
   },
   {
     key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    children: [
-      {
-        name: "hiep",
-        age: 18,
-        children: [
-          { name: "hiep", age: 18 },
-          { name: "dung", age: 17 },
-        ],
-      },
-      { name: "dung", age: 17 },
-    ],
+    description: "Task này là task hôm nay",
   },
   {
     key: 3,
-    name: "Not Expandable",
-    age: 29,
-    address: "Jiangsu No. 1 Lake Park",
-    children: [
-      { name: "hiep", age: 18 },
-      { name: "dung", age: 17 },
-    ],
+    description: "Task này là task hôm nay",
   },
   {
     key: 4,
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
+    description: "Task này là task hôm nay",
     children: [
-      { name: "hiep", age: 18 },
-      { name: "dung", age: 17 },
+      {
+        description: "Task này là task hôm nay",
+      },
+      {
+        description: "Task này là task hôm nay",
+      },
     ],
   },
 ];
@@ -98,13 +87,18 @@ function Tasks() {
       onClick={() => {
         const data: any = avatar;
         data.push({ color: "pink", name: "D" });
-        setAvatar(data);
+        setAvatar([...data]);
       }}
     >
       <Avatar style={{ color: "#f56a00" }}>D</Avatar>
       <Text>Dun Dun</Text>
     </div>
   );
+
+  const handleDeleteAvatar = (name: string) => {
+    const data = avatar.filter((ava) => ava.name !== name);
+    setAvatar([...data]);
+  };
 
   const columns: ColumnsType<DataType> = [
     {
@@ -120,7 +114,7 @@ function Tasks() {
           >
             <StatusTask />
             <Space align="center">
-              <Text>{data.name}</Text>
+              <Text>{data.description}</Text>
               <Text
                 style={{
                   width: "20px",
@@ -149,7 +143,25 @@ function Tasks() {
         <div style={{ display: "flex", alignItems: "center" }}>
           <Avatar.Group maxCount={2}>
             {avatar.map((data, index) => (
-              <Avatar style={{ backgroundColor: data.color }} key={index}>
+              <Avatar
+                className={styles.avatar}
+                style={{
+                  backgroundColor: data.color,
+                  overflow: "unset",
+                }}
+                key={index}
+              >
+                <div
+                  className={styles.iconAvartar}
+                  style={{
+                    position: "absolute",
+                    top: -4,
+                    right: -10,
+                  }}
+                  onClick={() => handleDeleteAvatar(data.name)}
+                >
+                  <CloseOutlined style={{ fontSize: "8px", color: "black" }} />
+                </div>
                 {data.name}
               </Avatar>
             ))}
@@ -177,6 +189,14 @@ function Tasks() {
       title: "Estimate time",
       key: "address",
       render: (data) => <DatePicker />,
+    },
+    {
+      title: "Level",
+      dataIndex: "",
+      key: "x",
+      render: () => (
+        <FireOutlined style={{ fontSize: "20px", color: "#888" }} />
+      ),
     },
     {
       title: "Action",
