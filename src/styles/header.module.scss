@@ -1,4 +1,6 @@
 .space_header {
+  position: relative;
+  width: 100%;
   :global {
     .ant-tabs-bottom > .ant-tabs-nav:before,
     .ant-tabs-bottom > div > .ant-tabs-nav:before,
@@ -9,5 +11,10 @@
     .ant-tabs-tab {
       margin: 0 !important;
     }
+  }
+  .avatarGroup {
+    position: absolute;
+    top: 25%;
+    left: 75%;
   }
 }

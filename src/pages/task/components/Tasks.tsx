@@ -16,6 +16,7 @@ import {
   UserAddOutlined,
   CloseOutlined,
   FireOutlined,
+  FireTwoTone,
 } from "@ant-design/icons";
 import StatusTask from "../../../common/StatusTask";
 import DatePicker from "antd/es/date-picker";
@@ -74,6 +75,7 @@ const data: DataType[] = [
 function Tasks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stateDefault, setStateDefault] = useState<string[]>(["1"]);
+  const [fire, setFire] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<Array<any>>([
     {
       color: "#87d068",
@@ -194,8 +196,20 @@ function Tasks() {
       title: "Level",
       dataIndex: "",
       key: "x",
-      render: () => (
-        <FireOutlined style={{ fontSize: "20px", color: "#888" }} />
+      render: (data) => (
+        <>
+          {fire ? (
+            <FireTwoTone
+              style={{ fontSize: "20px", color: "red" }}
+              onClick={() => setFire(!fire)}
+            />
+          ) : (
+            <FireOutlined
+              style={{ fontSize: "20px", color: "#888" }}
+              onClick={() => setFire(!fire)}
+            />
+          )}
+        </>
       ),
     },
     {

@@ -7,29 +7,6 @@ import { MenuLayoutHome } from "../../data/MenuLayoutHome";
 import styles from "../../styles/layout.module.scss";
 const { Text } = Typography;
 
-const data = [
-  {
-    id: 1,
-    name: "Project",
-    actions: "",
-  },
-  {
-    id: 2,
-    name: "Group",
-    actions: "",
-  },
-  {
-    id: 3,
-    name: "List Task",
-    actions: "",
-  },
-  {
-    id: 4,
-    name: "Task",
-    actions: "",
-  },
-];
-
 function Slider() {
   const items = MenuLayoutHome();
   const navigate = useNavigate();
@@ -72,19 +49,6 @@ function Slider() {
           items={items}
         />
         <Divider>Share Task</Divider>
-        <Space direction="vertical" style={{ width: "100%" }}>
-          {data.map((item) => (
-            <div key={item.id}>
-              <Space style={{ width: "100%", justifyContent: "center" }}>
-                <Button style={{ display: "flex", alignItems: "center" }}>
-                  <PlusCircleOutlined />
-                  {item.name}
-                </Button>
-              </Space>
-              <Divider />
-            </div>
-          ))}
-        </Space>
       </div>
     </>
   );

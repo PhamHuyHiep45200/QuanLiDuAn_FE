@@ -11,6 +11,7 @@
     top: 0;
     left: 0;
     right: 0;
+    z-index: 1;
     .layoutLogin {
       border-radius: 15px;
       color: white;
@@ -82,4 +83,43 @@
   z-index: 1;
   border-left: 1px solid rgb(240, 240, 240);
   box-shadow: 5px 3px 4px #3333;
+}
+
+.AddProject {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(144deg, #0b53da, #fc459b);
+  position: fixed;
+  bottom: 10%;
+  left: 95%;
+  animation: add 4s ease infinite;
+  .open_modal {
+    color: white;
+    animation: addModal 0.5s ease;
+  }
+}
+
+@keyframes add {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes addModal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
