@@ -9,6 +9,7 @@ import IsLogo from "../../common/IsLogo";
 import ImgaeTop from "../../assets/image/anhtop.png";
 import LogoShask from "../../assets/image/logoShask.png";
 import ModalContact from "../../pages/auth/contact/ModalContact";
+import { login } from "../../services/auth";
 
 const { Text, Title } = Typography;
 
@@ -17,16 +18,48 @@ function LayoutTop() {
   const [openRegister, setOpenRegister] = React.useState<boolean>(false);
   const [openContact, setOpenContact] = React.useState<boolean>(false);
   const [isLogo, setIsLogo] = React.useState<boolean>(false);
+  const [offset, setOffset] = React.useState<number>(0);
   useEffect(() => {
     setTimeout(() => {
       setIsLogo(true);
     }, 3000);
   }, []);
+
+  const [scrolled, setScrolled] = React.useState(false);
+  const handleScroll = () => {
+    if (window.pageYOffset > 80) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+  const getLogin = async () => {
+    const data = await login();
+    console.log(data);
+  };
+  useEffect(() => {
+    getLogin();
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  console.log(scrolled);
   return (
     <>
       {isLogo ? (
         <div className={styles.rootLayout}>
-          <Row justify="center" className={styles.layout}>
+          <Row
+            justify="center"
+            className={styles.layout}
+            style={{
+              background: scrolled
+                ? "linear-gradient(144deg, #0b53da, #a80451)"
+                : "transparent",
+              boxShadow: scrolled ? "0 0 3px 3px #333" : "none",
+            }}
+          >
             <Col span={22}>
               <Row>
                 <Col span={4}>
@@ -36,14 +69,16 @@ function LayoutTop() {
                       alignItems: "center",
                     }}
                   >
-                    <Image src={LogoShask} preview={false} height={70} />
+                    <Image src={LogoShask} preview={false} height={50} />
                     <Text
                       style={{
                         color: "white",
                         fontWeight: "bold",
                         display: "block",
-                        marginBottom: "10px",
-                        fontSize: "25px",
+                        fontSize: "35px",
+                        marginLeft: "6px",
+                        marginTop: "10px",
+                        fontFamily: "Dancing Script",
                       }}
                     >
                       hask
