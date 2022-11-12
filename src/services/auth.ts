@@ -1,7 +1,13 @@
 import request from ".";
 
-export async function login() {
-  return request(`/user`, {
-    method: "GET",
+export interface LoginType {
+  email: string;
+  password: string;
+}
+
+export async function login(data: LoginType) {
+  return request(`/auth`, {
+    method: "POST",
+    data,
   });
 }

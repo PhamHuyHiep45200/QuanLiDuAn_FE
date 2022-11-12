@@ -8,20 +8,22 @@ import {
   Typography,
   Space,
   Avatar,
+  Tag,
   Popover,
 } from "antd";
-import type { ColumnsType } from "antd/es/table";
 import {
   ShareAltOutlined,
   UserAddOutlined,
   CloseOutlined,
   FireOutlined,
   FireTwoTone,
+  SwapRightOutlined,
 } from "@ant-design/icons";
 import StatusTask from "../../../common/StatusTask";
 import DatePicker from "antd/es/date-picker";
+import type { ColumnsType } from "antd/es/table";
 import styles from "../../../styles/task.module.scss";
-
+const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
 interface DataType {
@@ -29,50 +31,11 @@ interface DataType {
   description?: string;
   children?: any;
 }
-
-const data: DataType[] = [
-  {
-    key: "1",
-    description: "Task này là task thứ nhất",
-    children: [
-      {
-        description: "Task này là taskok",
-        children: [
-          {
-            description: "Task này là task thứ nhất lần 1",
-          },
-          {
-            description: "Task này là task thứ nhất lần 2",
-          },
-        ],
-      },
-      {
-        description: "Task này là task hôm nay",
-      },
-    ],
-  },
-  {
-    key: "2",
-    description: "Task này là task hôm nay",
-  },
-  {
-    key: 3,
-    description: "Task này là task hôm nay",
-  },
-  {
-    key: 4,
-    description: "Task này là task hôm nay",
-    children: [
-      {
-        description: "Task này là task hôm nay",
-      },
-      {
-        description: "Task này là task hôm nay",
-      },
-    ],
-  },
-];
-function Tasks() {
+interface TasksProps {
+  data: any;
+}
+function Tasks(props: TasksProps) {
+  const { data } = props;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stateDefault, setStateDefault] = useState<string[]>(["1"]);
   const [fire, setFire] = useState<boolean>(false);
@@ -116,7 +79,7 @@ function Tasks() {
           >
             <StatusTask />
             <Space align="center">
-              <Text>{data.description}</Text>
+              <Text>{data.descriptions}</Text>
               <Text
                 style={{
                   width: "20px",
@@ -190,7 +153,16 @@ function Tasks() {
     {
       title: "Estimate time",
       key: "address",
-      render: (data) => <DatePicker />,
+      render: (data) => (
+        <>
+          {/* <RangePicker /> */}
+          <Space style={{ cursor: "pointer" }}>
+            <Tag color="blue">{data.start_Time}</Tag>
+            <SwapRightOutlined style={{ fontSize: "18px" }} />
+            <Tag color="red">{data.end_Time}</Tag>
+          </Space>
+        </>
+      ),
     },
     {
       title: "Level",
@@ -232,10 +204,8 @@ function Tasks() {
   };
   const handleSubmit = (value: any) => {
     console.log(value);
-    // const arr = stat;
     setStateDefault(["2"]);
   };
-  console.log(avatar);
 
   return (
     <>
@@ -243,8 +213,7 @@ function Tasks() {
         columns={columns}
         dataSource={data}
         defaultExpandAllRows
-        // // defaultExpandedRowKeys=
-        // expandable={{ expandedRowKeys: [...stateDefault] }}
+        pagination={false}
       />
       <Modal
         title="Basic Modal"

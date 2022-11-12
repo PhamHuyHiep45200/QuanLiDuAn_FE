@@ -23,18 +23,26 @@ function Project(props: ProjectProps) {
       key={id}
       style={{ marginBottom: "10px" }}
     >
-      <Card className={styles.card} onClick={() => navigate("/home/group")}>
+      <Card
+        className={styles.card}
+        onClick={() =>
+          navigate({
+            pathname: "/home/group",
+            search: `id_project=${data.id}`,
+          })
+        }
+      >
         <Space direction="vertical">
           <Text strong className={styles.name_Project}>
             {data.name}
           </Text>
-          {data?.assign?.length > 0 ? (
+          {data?.UserProject?.length > 0 ? (
             <Avatar.Group maxCount={4} size="large">
-              {data?.assign?.map((user: any) => (
+              {data?.UserProject?.map((user: any) => (
                 <Avatar key={user?.id} size="large">
-                  {user?.thumbnailUrl
+                  {user?.User?.thumbnailUrl
                     ? user?.thumbnailUrl
-                    : getName(user?.name)}
+                    : getName(user?.User?.email)}
                 </Avatar>
               ))}
             </Avatar.Group>

@@ -1,6 +1,5 @@
-import React, { useMemo } from "react";
-import { Avatar, Card, Col, Row, Space, Typography } from "antd";
-import styles from "../../../styles/project.module.scss";
+import React from "react";
+import { Row, Space, Typography, Card, Col } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   FolderOpenOutlined,
@@ -8,11 +7,11 @@ import {
   UnorderedListOutlined,
   BranchesOutlined,
 } from "@ant-design/icons";
-import DataGetListTask from "../../../data/DataGetListTask";
 import Project from "../../../common/Project";
 import Group from "../../../common/Group";
 import ListTask from "../../../common/ListTask";
-import Task from "../../../common/Task";
+import Tasks from "../../task/components/Tasks";
+import styles from "../../../styles/project.module.scss";
 
 const { Text } = Typography;
 
@@ -26,14 +25,9 @@ function DashBoardContent(props: DashBoardContentProps) {
 
   const getName = (name: string) => {
     const nameSplit = name.trim().split("");
-    return nameSplit[nameSplit.length - 1][0];
+    return nameSplit[0];
   };
 
-  const handleRedirectProject = (data: any) => {
-    navigate(`/project/${data.id}/list?project=${data.name}`);
-  };
-
-  const dataMockList = useMemo(() => DataGetListTask(), []);
   const GetIcon = (type: string) => {
     if (type === "PROJECT") {
       return (
@@ -45,7 +39,7 @@ function DashBoardContent(props: DashBoardContentProps) {
       return (
         <TeamOutlined style={{ marginBottom: "6px", color: getColor(type) }} />
       );
-    } else if (type === "LISTTASK") {
+    } else if (type === "ITEM") {
       return (
         <UnorderedListOutlined
           style={{ marginBottom: "6px", color: getColor(type) }}
@@ -64,7 +58,7 @@ function DashBoardContent(props: DashBoardContentProps) {
       return "red";
     } else if (colorType === "GROUP") {
       return "blue";
-    } else if (colorType === "LISTTASK") {
+    } else if (colorType === "ITEM") {
       return "green";
     } else if (colorType === "TASK") {
       return "#e300c7";
@@ -73,31 +67,49 @@ function DashBoardContent(props: DashBoardContentProps) {
 
   const getList = (typeList: string, index: number, data: any) => {
     if (typeList === "PROJECT") {
-      return <Project id={index} data={data} getName={getName} />;
+      return <Project key={index} id={index} data={data} getName={getName} />;
     } else if (typeList === "GROUP") {
-      return <Group id={index} data={data} getName={getName} />;
-    } else if (typeList === "LISTTASK") {
-      return <ListTask id={index} data={data} getName={getName} />;
-    } else if (typeList === "TASK") {
-      return <Task id={index} data={data} getName={getName} />;
+      return <Group key={index} id={index} data={data} getName={getName} />;
+    } else if (typeList === "ITEM") {
+      return <ListTask key={index} id={index} data={data} getName={getName} />;
     }
   };
-  console.log(dataMockList);
 
   return (
     <>
-      {dataMockList.map((mock, index) => (
-        <Row gutter={32} className={styles.rowContent} key={index}>
-          <Space className={styles.div_row_content} style={{ color: "red" }}>
-            {GetIcon(mock.type)}
-            <Text strong style={{ color: getColor(mock.type) }}>
-              {mock.name}
-            </Text>
-          </Space>
-          {mock?.data?.map((data: any, index: number) =>
-            getList(mock.type, index, data)
+      {dataProject.map((dataPr, index) => (
+        <>
+          {dataPr?.data?.length > 0 && (
+            <Row gutter={32} className={styles.rowContent} key={index}>
+              <Space
+                className={styles.div_row_content}
+                style={{ color: "red" }}
+              >
+                {GetIcon(dataPr.type)}
+                <Text strong style={{ color: getColor(dataPr.type) }}>
+                  {dataPr.name}
+                </Text>
+              </Space>
+              {dataPr?.type !== "TASK" &&
+                dataPr?.data?.map((data: any, index: number) =>
+                  getList(dataPr.type, index, data)
+                )}
+              {dataPr?.type === "TASK" && (
+                <Col
+                  xl={24}
+                  lg={24}
+                  sm={24}
+                  xs={24}
+                  style={{ marginBottom: "10px" }}
+                >
+                  <Card>
+                    <Tasks data={dataPr?.data} />
+                  </Card>
+                </Col>
+              )}
+            </Row>
           )}
-        </Row>
+        </>
       ))}
     </>
   );

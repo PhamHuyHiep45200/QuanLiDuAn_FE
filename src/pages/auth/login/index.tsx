@@ -2,17 +2,14 @@ import { Button, Drawer, Form, Space, Typography } from "antd";
 import Input from "antd/lib/input/Input";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { openCustomNotificationWithIcon } from "../../../common/Notifycations";
+import { login, LoginType } from "../../../services/auth";
 
 const { Title } = Typography;
 
 interface LoginProps {
   openLogin: boolean;
   setOpenLogin: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-interface SubmitForm {
-  email: string;
-  password: string;
 }
 
 function Login(props: LoginProps) {
@@ -23,14 +20,22 @@ function Login(props: LoginProps) {
     setOpenLogin(false);
   };
 
-  const handleSubmit = (value: SubmitForm) => {
-    console.log(value);
+  const handleSubmit = async (value: LoginType) => {
     setLoading(true);
-    setTimeout(() => {
+    const response = await login(value);
+    if (response.data.status === 200) {
       setLoading(false);
       setOpenLogin(false);
+      localStorage.setItem("id_user", response.data.user.id);
       navigate("/home");
-    }, 1000);
+    } else {
+      openCustomNotificationWithIcon(
+        "error",
+        "Login",
+        "Vui lòng kiểm tra lại thông tin!"
+      );
+      setLoading(false);
+    }
   };
   return (
     <Drawer

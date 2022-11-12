@@ -28,7 +28,7 @@ const routers = [
         component: Group,
       },
       {
-        path: "/home/list",
+        path: "/home/item",
         component: List,
       },
       {

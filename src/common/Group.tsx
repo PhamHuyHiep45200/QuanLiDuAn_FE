@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Button, Card, Col, Space, Typography } from "antd";
 import styles from "../styles/project.module.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const { Text } = Typography;
 
@@ -14,6 +14,7 @@ interface GroupProps {
 function Group(props: GroupProps) {
   const { id, data, getName } = props;
   const navigate = useNavigate();
+  const [search] = useSearchParams();
   return (
     <Col
       xl={8}

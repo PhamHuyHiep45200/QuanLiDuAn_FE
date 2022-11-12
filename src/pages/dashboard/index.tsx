@@ -2,81 +2,30 @@ import React, { useState } from "react";
 import LoadingDashboard from "../../common/LoadingDashboard";
 import EmptyData from "./components/EmptyData";
 import DashBoardContent from "./components/DashBoardContent";
-import AddEvent from "../../common/AddEvent";
-
-const data = [
-  {
-    id: 1,
-    name: "Mr_Food",
-    listUser: [
-      {
-        id: 12,
-        name: "Phạm Huy Hiệp",
-        thumbnailUrl: "",
-      },
-      {
-        id: 13,
-        name: "Trịnh Văn Quốc",
-        thumbnailUrl: "",
-      },
-      {
-        id: 14,
-        name: "Lê Doãn Diệp",
-        thumbnailUrl: "",
-      },
-      {
-        id: 15,
-        name: "Nguyễn Long Hải",
-        thumbnailUrl: "",
-      },
-      {
-        id: 16,
-        name: "Trần Sơn Đông",
-        thumbnailUrl: "",
-      },
-      {
-        id: 17,
-        name: "Nguyễn Dark Duy",
-        thumbnailUrl: "",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Quan_Li_Cong_Viec",
-    listUser: [
-      {
-        id: 12,
-        name: "Phạm Huy Hiệp",
-        thumbnailUrl: "",
-      },
-      {
-        id: 13,
-        name: "Trịnh Văn Quốc",
-        thumbnailUrl: "",
-      },
-      {
-        id: 14,
-        name: "Lê Doãn Diệp",
-        thumbnailUrl: "",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Smile_me",
-  },
-];
+import { getProjectAll } from "../../services/project";
+import { openCustomNotificationWithIcon } from "../../common/Notifycations";
+import { CreateRefeshProject } from "../../layout/layoutHome/Contents";
 
 function Dashboard() {
-  const [loading, setLoading] = useState<boolean>(true);
+  const { refesh } = React.useContext(CreateRefeshProject);
+  const [loading, setLoading] = useState<boolean>(false);
   const [dataProject, setDataProject] = useState<Array<any>>([]);
-  React.useEffect(() => {
-    setTimeout(() => {
-      setDataProject(data);
+  const getAllProject = async () => {
+    setLoading(true);
+    const idUser: string = localStorage.getItem("id_user")!;
+    const response = await getProjectAll(+idUser);
+    if (response.data.status === 200) {
+      setDataProject(response.data.data);
       setLoading(false);
-    }, 500);
-  });
+    } else {
+      openCustomNotificationWithIcon("error", "Get Data", "Get Data Error");
+    }
+  };
+  React.useEffect(() => {
+    getAllProject();
+  }, [refesh]);
+  console.log(refesh);
+
   return (
     <>
       {loading ? (
@@ -84,7 +33,7 @@ function Dashboard() {
       ) : (
         <>
           {" "}
-          {data.length > 0 ? (
+          {dataProject?.length > 0 ? (
             <DashBoardContent dataProject={dataProject} />
           ) : (
             <EmptyData />

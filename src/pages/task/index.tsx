@@ -10,7 +10,11 @@ function Task() {
       setLoading(false);
     }, 500);
   }, []);
-  return <>{loading ? <LoadingDashboard loading={loading} /> : <Tasks />}</>;
+  return (
+    <>
+      {loading ? <LoadingDashboard loading={loading} /> : <Tasks data={[]} />}
+    </>
+  );
 }
 
 export default Task;

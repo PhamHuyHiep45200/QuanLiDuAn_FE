@@ -97,10 +97,33 @@
   position: fixed;
   bottom: 10%;
   left: 95%;
+  position: relative;
   animation: add 4s ease infinite;
+
   .open_modal {
     color: white;
     animation: addModal 0.5s ease;
+  }
+}
+.AddProjectNone {
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 10%;
+  left: 95%;
+  position: relative;
+  background: transparent;
+  &Popup {
+    position: absolute;
+    width: 150px;
+    height: 220px;
+    padding: 10px 20px 20px;
+    bottom: 90px;
+    right: 10%;
+    background: #fff;
+    box-shadow: 0 0 2px 2px #9999;
+    animation: addModalHeight 0.3s ease;
+    overflow: hidden;
   }
 }
 
@@ -122,5 +145,13 @@
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes addModalHeight {
+  from {
+    height: 0;
+  }
+  to {
+    height: 220px;
   }
 }

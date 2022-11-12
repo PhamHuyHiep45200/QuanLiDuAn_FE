@@ -94,22 +94,14 @@ const datas: any = [
 ];
 
 interface TaskProps {
-  id: number;
   data: any;
   getName: any;
 }
 
 function Task(props: TaskProps) {
-  const { id, data, getName } = props;
+  const { data, getName } = props;
   return (
-    <Col
-      xl={24}
-      lg={24}
-      sm={24}
-      xs={24}
-      key={id}
-      style={{ marginBottom: "10px" }}
-    >
+    <Col xl={24} lg={24} sm={24} xs={24} style={{ marginBottom: "10px" }}>
       <Card
         className={styles.card}
         // onClick={() => handleRedirectProject(data)}

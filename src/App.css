@@ -30,6 +30,10 @@
 .ant-table-thead > tr > th {
   background-color: white;
 }
+.ant-form-item-label
+  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
+  display: none;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
