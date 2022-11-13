@@ -1,24 +1,49 @@
-import React from "react";
-import { Avatar, Popover, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { Avatar, Input, Popover, Typography } from "antd";
 import { CloseOutlined, UserAddOutlined } from "@ant-design/icons";
 import styles from "../styles/task.module.scss";
+import { useParams } from "react-router-dom";
+import { searchUserAll } from "../services/item";
 const { Text } = Typography;
 
 const avatar: any = [];
-function AssignUser() {
+function AssignUser({ setState }: any) {
+  const { id }: any = useParams();
+  const [data, setData] = useState<any>([]);
   const contentAvatar = (
     <div
-      style={{ display: "flex", alignItems: "center", padding: "0.5rem 1rem" }}
-      onClick={() => {
-        // const data: any = avatar;
-        // data.push({ color: "pink", name: "D" });
-        // setAvatar([...data]);
-      }}
+      style={{ display: "flex", alignItems: "center" }}
+      className="w-[150px] min-h-[100px] flex-col"
     >
-      <Avatar style={{ color: "#f56a00" }}>D</Avatar>
-      <Text>Dun Dun</Text>
+      <div>
+        <Input placeholder="search" />
+      </div>
+      <div className="w-full">
+        {data?.map((item: any, index: number) => (
+          <div
+            className="py-2 flex items-center justify-start w-full"
+            onClick={() => setState()}
+            key={index}
+          >
+            <Avatar>H</Avatar>
+            <Text className="font-medium !text-[#000] ml-2">
+              {item?.name}{" "}
+              <Text className="font-normal text-[13px] !text-[#999]">
+                ({item?.email})
+              </Text>
+            </Text>
+          </div>
+        ))}
+      </div>
     </div>
   );
+  useEffect(() => {
+    getAllUser();
+  }, []);
+  const getAllUser = async () => {
+    const response = await searchUserAll(+id);
+    console.log(response);
+  };
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <Avatar.Group maxCount={2}>

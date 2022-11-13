@@ -6,11 +6,11 @@ import ModalEmpty from "./modal/ModalEmpty";
 
 const { Title } = Typography;
 
-function EmptyDataList({ open, setOpen, getItems }: any) {
+function EmptyData({ open, setOpen }: any) {
   return (
     <Space style={{ width: "100%" }} direction="vertical" align="center">
       <Image src={EmptyImage} preview={false} height={300} />
-      <Title level={4}>Tiếc quá! Bạn chưa có list task nào...</Title>
+      <Title level={4}>Tiếc quá! Bạn chưa có dự án nào...</Title>
       <Button
         type="primary"
         shape="round"
@@ -24,11 +24,11 @@ function EmptyDataList({ open, setOpen, getItems }: any) {
         onClick={() => setOpen(true)}
       >
         <PlusOutlined />
-        List task
+        Items
       </Button>
-      <ModalEmpty open={open} setOpen={setOpen} getItems={getItems} />
+      <ModalEmpty open={open} setOpen={setOpen} />
     </Space>
   );
 }
 
-export default EmptyDataList;
+export default EmptyData;

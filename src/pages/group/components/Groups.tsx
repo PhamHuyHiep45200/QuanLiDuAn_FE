@@ -15,7 +15,10 @@ function Groups({ data, getGroup }: any) {
   const [open, setOpen] = React.useState<boolean>(false);
   const handleRedirect = (id: number) => {
     console.log(id);
-    navigate({ pathname: "/home/item", search: `${search}&group=${id}` });
+    navigate({
+      pathname: "/home/item",
+      search: `id_group=${id}&router=id_group`,
+    });
   };
   return (
     <Row gutter={[16, 16]}>

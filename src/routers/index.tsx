@@ -32,7 +32,7 @@ const routers = [
         component: List,
       },
       {
-        path: "/home/task",
+        path: "/home/task/:id",
         component: Task,
       },
     ],

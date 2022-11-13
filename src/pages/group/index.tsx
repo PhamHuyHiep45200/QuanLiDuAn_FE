@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import LoadingDashboard from "../../common/LoadingDashboard";
 import { openCustomNotificationWithIcon } from "../../common/Notifycations";
 import { CreateProviderProject } from "../../layout/layoutHome";
@@ -11,14 +11,14 @@ function Group() {
   const { setUser, setName } = useContext(CreateProviderProject);
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<Array<any>>([]);
-  const { search } = useLocation();
+  const [useSearch] = useSearchParams();
   useEffect(() => {
     setLoading(true);
     getGroup();
   }, []);
 
   const getGroup = async () => {
-    const id = search.split("=")[1];
+    const id: any = useSearch.get("router_id");
     const { response }: any = await getGroupInProject(+id);
     if (response.status === 200) {
       console.log(response);

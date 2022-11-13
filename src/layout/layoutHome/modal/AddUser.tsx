@@ -4,7 +4,8 @@ import { getUsers } from "../../../services/user";
 import { openCustomNotificationWithIcon } from "../../../common/Notifycations";
 import styles from "./modal.module.scss";
 import { addUserProject } from "../../../services/user-project";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { addUserGroup } from "../../../services/user-group";
 
 const { Text } = Typography;
 const getName = (name: string) => {
@@ -13,7 +14,7 @@ const getName = (name: string) => {
 };
 function AddUser({ open, setOpen }: any) {
   const ref = useRef<any>(null);
-  const { search } = useLocation();
+  const [useSearch] = useSearchParams();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState<boolean>(false);
   const [dataUser, setDataUser] = useState<Array<any>>([]);
@@ -21,21 +22,37 @@ function AddUser({ open, setOpen }: any) {
   const handleSubmit = async (value: any) => {
     setLoading(true);
     const idUserParent: any = localStorage.getItem("id_user");
-    const idProject = search.split("=")[1];
-    const dataSubmit = {
-      id_user_parent: +idUserParent,
-      id_user: +value.id,
-      id_project: +idProject,
-      status: "PENDDING",
-      role: "USER",
-    };
-    const response = await addUserProject(dataSubmit);
-    if (response.data) {
-      setLoading(false);
-      console.log(response);
+    const name: any = useSearch.get("router");
+    const idAdd: any = useSearch.get("router_id");
+    if (name === "project") {
+      const dataSubmit = {
+        id_user_parent: +idUserParent,
+        id_user: +value.id,
+        [name]: +idAdd,
+        status: "PENDDING",
+        role: "USER",
+      };
+      const response = await addUserProject(dataSubmit);
+      if (response.data) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+        openCustomNotificationWithIcon("error", "add user", "add user error");
+      }
     } else {
-      setLoading(false);
-      openCustomNotificationWithIcon("error", "add user", "add user error");
+      const dataSubmit = {
+        id_user_parent: +idUserParent,
+        id_user: +value.id,
+        [name]: +idAdd,
+        role: "USER",
+      };
+      const response = await addUserGroup(dataSubmit);
+      if (response.data) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+        openCustomNotificationWithIcon("error", "add user", "add user error");
+      }
     }
   };
 

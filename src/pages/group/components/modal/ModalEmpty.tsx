@@ -1,6 +1,6 @@
 import { Modal, Input, Form, Button } from "antd";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { openCustomNotificationWithIcon } from "../../../../common/Notifycations";
 import { createGroup } from "../../../../services/group";
 
@@ -12,12 +12,12 @@ interface ModalEmptyProps {
 
 function ModalEmpty(props: ModalEmptyProps) {
   const { open, setOpen, getGroup } = props;
-  const { search } = useLocation();
+  const [useSearch] = useSearchParams();
   const handleSubmit = async (value: any) => {
     const id: any = localStorage.getItem("id_user");
-    const idProject = search.split("=")[1];
+    const idAdd: any = useSearch.get("router_id");
     const response = await createGroup({
-      id_project: +idProject,
+      id_project: +idAdd,
       id_user: +id,
       name: value.name,
     });

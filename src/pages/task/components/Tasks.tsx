@@ -31,11 +31,7 @@ interface DataType {
   description?: string;
   children?: any;
 }
-interface TasksProps {
-  data: any;
-}
-function Tasks(props: TasksProps) {
-  const { data } = props;
+function Tasks({ data }: any) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stateDefault, setStateDefault] = useState<string[]>(["1"]);
   const [fire, setFire] = useState<boolean>(false);
@@ -111,7 +107,7 @@ function Tasks(props: TasksProps) {
               <Avatar
                 className={styles.avatar}
                 style={{
-                  backgroundColor: data.color,
+                  backgroundColor: data?.color,
                   overflow: "unset",
                 }}
                 key={index}
@@ -123,11 +119,11 @@ function Tasks(props: TasksProps) {
                     top: -4,
                     right: -10,
                   }}
-                  onClick={() => handleDeleteAvatar(data.name)}
+                  onClick={() => handleDeleteAvatar(data?.name)}
                 >
                   <CloseOutlined style={{ fontSize: "8px", color: "black" }} />
                 </div>
-                {data.name}
+                {data?.name}
               </Avatar>
             ))}
           </Avatar.Group>

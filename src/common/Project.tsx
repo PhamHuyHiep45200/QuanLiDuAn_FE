@@ -28,7 +28,7 @@ function Project(props: ProjectProps) {
         onClick={() =>
           navigate({
             pathname: "/home/group",
-            search: `id_project=${data.id}`,
+            search: `router_id=${data.id}&router=id_project`,
           })
         }
       >
