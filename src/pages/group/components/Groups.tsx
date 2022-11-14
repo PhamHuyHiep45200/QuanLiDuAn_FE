@@ -9,10 +9,9 @@ const getName = (name: string) => {
   const nameSplit = name.trim().split("");
   return nameSplit[0];
 };
-function Groups({ data, getGroup }: any) {
+function Groups({ data, getGroup, open, setOpen }: any) {
   const { search } = useLocation();
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState<boolean>(false);
   const handleRedirect = (id: number) => {
     console.log(id);
     navigate({

@@ -19,3 +19,8 @@ export async function getProjectAll(id: number) {
     method: "GET",
   });
 }
+export async function getNotifycations(id_user: number) {
+  return request(`/project/notify/${id_user}`, {
+    method: "GET",
+  });
+}

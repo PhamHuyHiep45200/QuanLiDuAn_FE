@@ -6,3 +6,10 @@ export async function addUserProject(data: any) {
     data,
   });
 }
+
+export async function updateNitifyProject(id: number, data: any) {
+  return request(`/user-project/${id}`, {
+    method: "PUT",
+    data,
+  });
+}

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Image, Menu, Space, Divider, Typography, Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { FolderOpenOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import Logo from "../../assets/image/logoShash.png";
 import { MenuLayoutHome } from "../../data/MenuLayoutHome";
 import styles from "../../styles/layout.module.scss";

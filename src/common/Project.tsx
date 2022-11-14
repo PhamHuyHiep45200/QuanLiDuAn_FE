@@ -1,7 +1,8 @@
 import React from "react";
-import { Avatar, Card, Col, Space, Typography } from "antd";
+import { Avatar, Card, Col, Image, Space, Typography } from "antd";
 import styles from "../styles/project.module.scss";
 import { useNavigate } from "react-router-dom";
+import Projects from "../assets/image/project.png";
 
 const { Text } = Typography;
 
@@ -23,8 +24,9 @@ function Project(props: ProjectProps) {
       key={id}
       style={{ marginBottom: "10px" }}
     >
-      <Card
+      <div
         className={styles.card}
+        style={{ position: "relative" }}
         onClick={() =>
           navigate({
             pathname: "/home/group",
@@ -32,8 +34,9 @@ function Project(props: ProjectProps) {
           })
         }
       >
-        <Space direction="vertical">
-          <Text strong className={styles.name_Project}>
+        <Image src={Projects} height={200} width={250} preview={false} />
+        <Space direction="vertical" className="absolute top-16 left-10">
+          <Text strong className="text-[20px] font-bold !text-[#333]">
             {data.name}
           </Text>
           {data?.UserProject?.length > 0 ? (
@@ -50,7 +53,7 @@ function Project(props: ProjectProps) {
             <Text type="secondary"> Chưa có thành viên...Project</Text>
           )}
         </Space>
-      </Card>
+      </div>
     </Col>
   );
 }

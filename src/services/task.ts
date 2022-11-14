@@ -12,3 +12,9 @@ export async function getTaskAll(id: number) {
     method: "GET",
   });
 }
+export async function updateTask(id: number, params: any) {
+  return request(`/task/${id}`, {
+    method: "PUT",
+    params,
+  });
+}

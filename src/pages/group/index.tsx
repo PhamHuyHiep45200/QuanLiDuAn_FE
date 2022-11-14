@@ -10,6 +10,7 @@ import Groups from "./components/Groups";
 function Group() {
   const { setUser, setName } = useContext(CreateProviderProject);
   const [loading, setLoading] = useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false);
   const [data, setData] = useState<Array<any>>([]);
   const [useSearch] = useSearchParams();
   useEffect(() => {
@@ -38,9 +39,14 @@ function Group() {
       ) : (
         <>
           {data?.length > 0 ? (
-            <Groups data={data} getGroup={getGroup} />
+            <Groups
+              data={data}
+              getGroup={getGroup}
+              open={open}
+              setOpen={setOpen}
+            />
           ) : (
-            <EmptyDataGroup />
+            <EmptyDataGroup open={open} setOpen={setOpen} getGroup={getGroup} />
           )}
         </>
       )}

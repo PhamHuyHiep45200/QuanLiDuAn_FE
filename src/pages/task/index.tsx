@@ -1,31 +1,43 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import LoadingDashboard from "../../common/LoadingDashboard";
+import { openCustomNotificationWithIcon } from "../../common/Notifycations";
+import { getTaskAll } from "../../services/task";
 import EmptyData from "./components/EmptyData";
 import Tasks from "./components/Tasks";
+import ModalEmpty from "./components/modal/ModalEmpty";
 const datas: any = [];
 function Task() {
+  const { id }: any = useParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<Array<any>>([]);
+  const [count, setCount] = useState<number>(0);
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
-      getTasks();
-    }, 500);
+    getTasks();
   }, []);
-  const getTasks = () => {
-    setData(datas);
+  const getTasks = async () => {
+    const response = await getTaskAll(+id);
+    if (response.data.status === 200) {
+      setData(response.data.data);
+      setCount(response.data.count);
+    } else {
+      openCustomNotificationWithIcon("error", "error", "error");
+    }
     setLoading(false);
   };
   return (
     <>
       {loading ? (
         <LoadingDashboard loading={loading} />
-      ) : data.length > 0 ? (
-        <Tasks data={[]} open={open} setOpen={setOpen} />
+      ) : count > 0 ? (
+        <Tasks data={data} open={open} setOpen={setOpen} getTasks={getTasks} />
       ) : (
-        <EmptyData open={open} setOpen={setOpen} />
+        <EmptyData open={open} setOpen={setOpen} getTasks={getTasks} />
       )}
+
+      <ModalEmpty open={open} setOpen={setOpen} getTasks={getTasks} />
     </>
   );
 }

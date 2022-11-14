@@ -6,8 +6,7 @@ import ModalEmpty from "./modal/ModalEmpty";
 
 const { Title } = Typography;
 
-function EmptyDataGroup() {
-  const [openModal, setOpenModal] = useState<boolean>(false);
+function EmptyDataGroup({ open, setOpen, getGroup }: any) {
   return (
     <Space style={{ width: "100%" }} direction="vertical" align="center">
       <Image src={EmptyImage} preview={false} height={300} />
@@ -22,12 +21,12 @@ function EmptyDataGroup() {
           display: "flex",
           alignItems: "center",
         }}
-        onClick={() => setOpenModal(true)}
+        onClick={() => setOpen(true)}
       >
         <PlusOutlined />
         Group
       </Button>
-      <ModalEmpty open={openModal} setOpen={setOpenModal} />
+      <ModalEmpty open={open} setOpen={setOpen} getGroup={getGroup} />
     </Space>
   );
 }

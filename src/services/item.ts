@@ -14,11 +14,11 @@ export async function getItemAll(id: number) {
 }
 
 export async function searchUserAll(id: number) {
-  return request(`/item/get-user-group/${id}`, {
+  return request(`/item/get-all-user-group/${id}`, {
     method: "GET",
   });
 }
-export async function searchUserId(id: number, params: any) {
+export async function searchUserQuery(id: number, params: any) {
   return request(`/item/get-user-group/${id}`, {
     method: "GET",
     params,

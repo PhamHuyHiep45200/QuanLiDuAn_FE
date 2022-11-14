@@ -4,6 +4,7 @@ import Dashboard from "../pages/dashboard";
 import Group from "../pages/group";
 import Home from "../pages/home";
 import List from "../pages/list";
+import NotifyCations from "../pages/notifications";
 import Task from "../pages/task";
 import Top from "../pages/top";
 // interface Router {
@@ -19,6 +20,10 @@ const routers = [
     path: "/home",
     component: Home,
     children: [
+      {
+        path: "/home/notifycations",
+        component: NotifyCations,
+      },
       {
         path: "/home",
         component: Dashboard,

@@ -6,7 +6,7 @@ import ModalEmpty from "./modal/ModalEmpty";
 
 const { Title } = Typography;
 
-function EmptyData({ open, setOpen }: any) {
+function EmptyData({ open, setOpen, getTasks }: any) {
   return (
     <Space style={{ width: "100%" }} direction="vertical" align="center">
       <Image src={EmptyImage} preview={false} height={300} />
@@ -24,9 +24,8 @@ function EmptyData({ open, setOpen }: any) {
         onClick={() => setOpen(true)}
       >
         <PlusOutlined />
-        Items
+        task
       </Button>
-      <ModalEmpty open={open} setOpen={setOpen} />
     </Space>
   );
 }

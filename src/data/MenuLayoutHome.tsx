@@ -12,7 +12,7 @@ export const MenuLayoutHome = () => {
     {
       key: 2,
       label: "Notifycations",
-      path: "/home",
+      path: "/home/notifycations",
       icon: <BellOutlined />,
     },
   ];

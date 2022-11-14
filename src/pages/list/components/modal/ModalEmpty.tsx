@@ -9,7 +9,7 @@ function ModalEmpty({ getItems, open, setOpen }: any) {
   const [form] = Form.useForm();
   const [searchParams] = useSearchParams();
   const handleSubmit = async (value: any) => {
-    const idGroup: any = searchParams.get("group");
+    const idGroup: any = searchParams.get("id_group");
     const id: any = localStorage.getItem("id_user");
     const response = await createItem({
       id_group: +idGroup,
