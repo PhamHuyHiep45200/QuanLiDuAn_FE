@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/image/logoShash.png";
 import { MenuLayoutHome } from "../../data/MenuLayoutHome";
 import styles from "../../styles/layout.module.scss";
+import MenuHome from "../../common/menu";
 const { Text } = Typography;
 
 function Slider() {
@@ -48,6 +49,7 @@ function Slider() {
           items={items}
         />
         <Divider>Share Task</Divider>
+        <MenuHome />
       </div>
     </>
   );

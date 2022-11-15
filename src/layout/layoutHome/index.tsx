@@ -21,6 +21,7 @@ const LayoutHome = () => {
           breakpoint="lg"
           collapsedWidth="0"
           style={{ height: "100vh", width: "40rem" }}
+          width={250}
         >
           <Slider />
         </Sider>
