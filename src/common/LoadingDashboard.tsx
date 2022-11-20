@@ -10,7 +10,6 @@ function LoadingDashboard(props: LoadingDashboardProps) {
       <Skeleton active loading={loading} />
       <Skeleton active loading={loading} />
       <Skeleton active loading={loading} />
-      <Skeleton active loading={loading} />
     </div>
   );
 }

@@ -1,0 +1,34 @@
+.taskTable {
+  :global {
+    .ant-table-thead > tr > th {
+      background-color: transparent;
+    }
+    .ant-table-thead > tr > th {
+      background: transparent;
+      padding: 0 !important;
+      font-weight: 500;
+      color: #999;
+    }
+    .ant-table {
+      background: transparent;
+    }
+    .ant-table-thead
+      > tr
+      > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan]):before {
+      display: none;
+    }
+    .ant-table-tbody > tr > td {
+      background-color: #fff;
+    }
+    .ant-table-tbody > tr > td,
+    .ant-table-thead > tr > th,
+    .ant-table tfoot > tr > td,
+    .ant-table tfoot > tr > th {
+      padding: 9px;
+    }
+    //form
+    .ant-form-item {
+      margin: 0;
+    }
+  }
+}

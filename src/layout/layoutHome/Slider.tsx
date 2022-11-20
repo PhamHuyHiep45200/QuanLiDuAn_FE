@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Image, Menu, Space, Divider, Typography, Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/image/logoShash.png";
 import { MenuLayoutHome } from "../../data/MenuLayoutHome";
-import styles from "../../styles/layout.module.scss";
 import MenuHome from "../../common/menu";
 const { Text } = Typography;
 
-function Slider() {
+function Slider({ menu }: any) {
   const items = MenuLayoutHome();
   const navigate = useNavigate();
 
@@ -31,16 +29,7 @@ function Slider() {
 
   return (
     <>
-      <div>
-        <Space
-          style={{ width: "100%", cursor: "pointer", padding: "0.5rem 1rem" }}
-          align="center"
-          onClick={() => navigate("/home")}
-        >
-          <Image src={Logo} preview={false} height={50} />
-          <Text strong>Shask</Text>
-        </Space>
-        <Divider style={{ marginTop: 0 }} />
+      <div className="mt-[60px]">
         <Menu
           theme="light"
           mode="inline"
@@ -49,7 +38,7 @@ function Slider() {
           items={items}
         />
         <Divider>Share Task</Divider>
-        <MenuHome />
+        <MenuHome menu={menu} />
       </div>
     </>
   );

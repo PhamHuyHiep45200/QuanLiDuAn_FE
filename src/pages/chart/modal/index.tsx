@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { memo, useContext, useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -9,11 +9,10 @@ import {
   Avatar,
 } from "antd";
 import Upload from "antd/es/upload";
-import { openCustomNotificationWithIcon } from "../../../../common/Notifycations";
 import { CloseCircleOutlined } from "@ant-design/icons";
-import AssignUser from "../../../../common/AssignUser";
 import { useParams } from "react-router-dom";
-import { createTask } from "../../../../services/task";
+import AssignUser from "../../../common/AssignUser";
+import moment from "moment";
 const { TextArea } = Input;
 const getName = (name: string) => {
   const nameSplit = name.trim().split("");
@@ -21,35 +20,18 @@ const getName = (name: string) => {
 };
 const { RangePicker } = DatePicker;
 const { Text } = Typography;
+const dateFormat = "YYYY/MM/DD";
 
-function AddProject(props: any) {
-  const { open, setOpen, getTasks } = props;
-  const { id }: any = useParams();
+function DescriptionsTask(props: any) {
+  const [form] = Form.useForm();
+  const { open, setOpen, title, data, refesh } = props;
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<any>(undefined);
   const [userManager, setUserManager] = useState<any>(undefined);
   const [fileList, setFileList] = useState<any[]>([]);
+
   const handleSubmit = async (value: any) => {
-    const startTime = value.estimate[0].toISOString();
-    const endTime = value.estimate[1].toISOString();
-    const dataSubmit = {
-      id_item: +id,
-      id_user: user ? user?.id : null,
-      status: "OPEN",
-      id_taskParent: null,
-      descriptions: value.descriptions,
-      userManager: userManager ? userManager?.id : null,
-      start_Time: startTime,
-      end_Time: endTime,
-      level: "NO",
-    };
-    const response = await createTask(dataSubmit);
-    if (response.data) {
-      getTasks();
-      handleCancel();
-    } else {
-      openCustomNotificationWithIcon("error", "error", "error");
-    }
+    console.log(value);
   };
   const handleChangeImage = (value: any) => {
     console.log(value.file);
@@ -64,16 +46,25 @@ function AddProject(props: any) {
   const handleCancel = () => {
     setOpen(false);
   };
+  useEffect(() => {
+    form.setFieldsValue({
+      descriptions: data?.descriptions,
+      estimate: [
+        moment(moment(data?.start_Time).format(dateFormat), dateFormat),
+        moment(moment(data?.end_Time).format(dateFormat), dateFormat),
+      ],
+    });
+  }, [data]);
 
   return (
     <Modal
-      title="add task"
+      title={title}
       open={open}
       footer={false}
       onCancel={handleCancel}
       width={800}
     >
-      <Form onFinish={handleSubmit} labelAlign="left" colon={false}>
+      <Form onFinish={handleSubmit} labelAlign="left" colon={false} form={form}>
         <div className="flex items-center mb-2">
           <Text className="min-w-[125px]">assign user</Text>
           {user ? (
@@ -141,7 +132,7 @@ function AddProject(props: any) {
         </Form.Item>
         <div style={{ textAlign: "center" }}>
           <Button htmlType="submit" type="primary" loading={loading}>
-            add task
+            update
           </Button>
         </div>
       </Form>
@@ -149,4 +140,4 @@ function AddProject(props: any) {
   );
 }
 
-export default AddProject;
+export default memo(DescriptionsTask);

@@ -10,7 +10,7 @@ function EmptyData({ open, setOpen, getTasks }: any) {
   return (
     <Space style={{ width: "100%" }} direction="vertical" align="center">
       <Image src={EmptyImage} preview={false} height={300} />
-      <Title level={4}>Tiếc quá! Bạn chưa có dự án nào...</Title>
+      <Title level={4}>Tiếc quá! Bạn chưa có task nào...</Title>
       <Button
         type="primary"
         shape="round"

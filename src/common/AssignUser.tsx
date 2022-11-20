@@ -3,7 +3,7 @@ import { Avatar, Input, Popover, Typography } from "antd";
 import { CloseOutlined, UserAddOutlined } from "@ant-design/icons";
 import styles from "../styles/task.module.scss";
 import { useParams } from "react-router-dom";
-import { searchUserAll, searchUserQuery } from "../services/item";
+import { searchUserQuery } from "../services/item";
 import { openCustomNotificationWithIcon } from "./Notifycations";
 const { Text } = Typography;
 const getName = (name: string) => {
@@ -71,17 +71,17 @@ function AssignUser({ setState }: any) {
       </div>
     </div>
   );
-  useEffect(() => {
-    getAllUser();
-  }, []);
-  const getAllUser = async () => {
-    const response = await searchUserAll(+id);
-    if (response.data.status === 200) {
-      setData(response.data.data.Group.UserGroup);
-    } else {
-      openCustomNotificationWithIcon("error", "error", "error");
-    }
-  };
+  // useEffect(() => {
+  //   getAllUser();
+  // }, []);
+  // const getAllUser = async () => {
+  //   const response = await searchUserAll(+id);
+  //   if (response.data.status === 200) {
+  //     setData(response.data.data.Group.UserGroup);
+  //   } else {
+  //     openCustomNotificationWithIcon("error", "error", "error");
+  //   }
+  // };
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <Avatar.Group maxCount={2}>

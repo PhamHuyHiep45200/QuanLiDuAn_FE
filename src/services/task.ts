@@ -13,7 +13,7 @@ export async function getTaskAll(id: number) {
   });
 }
 export async function updateTask(id: number, params: any) {
-  return request(`/task/${id}`, {
+  return request(`/task/update/${id}`, {
     method: "PUT",
     params,
   });

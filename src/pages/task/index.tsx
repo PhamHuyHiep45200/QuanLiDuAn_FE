@@ -16,7 +16,7 @@ function Task() {
   useEffect(() => {
     setLoading(true);
     getTasks();
-  }, []);
+  }, [id]);
   const getTasks = async () => {
     const response = await getTaskAll(+id);
     if (response.data.status === 200) {

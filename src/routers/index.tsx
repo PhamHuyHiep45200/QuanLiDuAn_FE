@@ -1,9 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "../pages/dashboard";
-import Group from "../pages/group";
+import Chart from "../pages/chart";
 import Home from "../pages/home";
-import List from "../pages/list";
 import NotifyCations from "../pages/notifications";
 import Task from "../pages/task";
 import Top from "../pages/top";
@@ -25,20 +23,12 @@ const routers = [
         component: NotifyCations,
       },
       {
-        path: "/home",
-        component: Dashboard,
-      },
-      {
-        path: "/home/group",
-        component: Group,
-      },
-      {
-        path: "/home/item",
-        component: List,
-      },
-      {
         path: "/home/task/:id",
         component: Task,
+      },
+      {
+        path: "/home/chart/:id",
+        component: Chart,
       },
     ],
   },
