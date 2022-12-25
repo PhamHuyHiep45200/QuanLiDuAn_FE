@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Form,
@@ -7,8 +7,11 @@ import {
   DatePicker,
   Typography,
   Avatar,
+  Skeleton,
 } from "antd";
 import Upload from "antd/es/upload";
+import { storage } from "../../../../firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { openCustomNotificationWithIcon } from "../../../../common/Notifycations";
 import { CloseCircleOutlined } from "@ant-design/icons";
 import AssignUser from "../../../../common/AssignUser";
@@ -22,27 +25,37 @@ const getName = (name: string) => {
 const { RangePicker } = DatePicker;
 const { Text } = Typography;
 
-function AddProject(props: any) {
-  const { open, setOpen, getTasks } = props;
+function AddTask(props: any) {
+  const { open, setOpen, getTasks, id_taskParent } = props;
+  const [form] = Form.useForm();
   const { id }: any = useParams();
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [user, setUser] = useState<any>(undefined);
   const [userManager, setUserManager] = useState<any>(undefined);
   const [fileList, setFileList] = useState<any[]>([]);
   const handleSubmit = async (value: any) => {
-    const startTime = value.estimate[0].toISOString();
-    const endTime = value.estimate[1].toISOString();
+    let thumbnail: any = [];
+    if (value.thumbnail) {
+      thumbnail = value.thumbnail.map((thu: any) => thu.url);
+    }
+    const startTime =
+      value.estimate.length > 0 ? value.estimate[0].toISOString() : null;
+    const endTime =
+      value.estimate.length > 0 ? value.estimate[1].toISOString() : null;
     const dataSubmit = {
       id_item: +id,
       id_user: user ? user?.id : null,
       status: "OPEN",
-      id_taskParent: null,
+      taskParentId: id_taskParent ? id_taskParent : null,
       descriptions: value.descriptions,
       userManager: userManager ? userManager?.id : null,
       start_Time: startTime,
       end_Time: endTime,
-      level: "NO",
+      thumbnail: thumbnail,
     };
+    console.log(dataSubmit);
+
     const response = await createTask(dataSubmit);
     if (response.data) {
       getTasks();
@@ -51,19 +64,55 @@ function AddProject(props: any) {
       openCustomNotificationWithIcon("error", "error", "error");
     }
   };
-  const handleChangeImage = (value: any) => {
-    console.log(value.file);
-    const file = URL.createObjectURL(value.file);
-    const data = fileList;
-    data.push({
-      status: "done",
-      url: file,
-      id: 2,
-    });
+  const handleChangeImage = async (value: any) => {
+    setLoadingImage(true);
+    const refImage = ref(storage, `/files/${value.file.name}`);
+    const uploadChange = uploadBytesResumable(refImage, value.file);
+
+    uploadChange.on(
+      "state_changed",
+      (snapshot) => {
+        console.log(
+          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+        );
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadChange.snapshot.ref).then((url) => {
+          const data = fileList;
+          data.push({
+            status: "done",
+            url: url,
+            id: Math.random(),
+          });
+          form.setFieldValue("thumbnail", data);
+          setFileList([...data]);
+          setLoadingImage(false);
+        });
+      }
+    );
   };
   const handleCancel = () => {
     setOpen(false);
+    setUser(undefined);
+    setUserManager(undefined);
+    form.resetFields();
   };
+  const handleDeleteImage = (value: any) => {
+    const data = fileList;
+    let position = 0;
+    data.map((da, index) => {
+      if (da.id === value.id) {
+        position = index;
+      }
+    });
+    data.splice(position, 1);
+    setFileList([...data]);
+    form.setFieldValue("thumbnail", data);
+  };
+  console.log(id_taskParent);
 
   return (
     <Modal
@@ -73,7 +122,7 @@ function AddProject(props: any) {
       onCancel={handleCancel}
       width={800}
     >
-      <Form onFinish={handleSubmit} labelAlign="left" colon={false}>
+      <Form onFinish={handleSubmit} labelAlign="left" colon={false} form={form}>
         <div className="flex items-center mb-2">
           <Text className="min-w-[125px]">assign user</Text>
           {user ? (
@@ -134,9 +183,9 @@ function AddProject(props: any) {
             accept=".png, .jpg, .jpeg"
             fileList={fileList}
             customRequest={handleChangeImage}
-            onRemove={(value) => console.log(value)}
+            onRemove={(value) => handleDeleteImage(value)}
           >
-            {"+ Upload"}
+            {loadingImage ? <Skeleton.Image active={true} /> : "+ Upload"}
           </Upload>
         </Form.Item>
         <div style={{ textAlign: "center" }}>
@@ -149,4 +198,4 @@ function AddProject(props: any) {
   );
 }
 
-export default AddProject;
+export default AddTask;

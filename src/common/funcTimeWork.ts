@@ -3,7 +3,6 @@ import moment from "moment";
 const getTime = (start: string, end: string) => {
   const dataStart = start.split("-");
   const dataEnd = end.split("-");
-  console.log(dataStart, dataEnd);
 
   if (dataStart[2] > dataEnd[2]) {
     return "Hết hạn";

@@ -15,6 +15,8 @@ export const CreateProviderProject = React.createContext<any>(null);
 
 const LayoutHome = () => {
   const [menu, setMenu] = React.useState<Array<any>>([]);
+  const [refesh, setRefesh] = React.useState<any>(null);
+  const [idItem, setIdItem] = React.useState<number>(1);
   const getFolder = async () => {
     const id: any = localStorage.getItem("id_user");
     const response = await getProjectAll(+id);
@@ -30,54 +32,56 @@ const LayoutHome = () => {
   };
   useEffect(() => {
     getFolder();
-  }, []);
+  }, [refesh]);
+
+  const data = { setRefesh, idItem, setIdItem };
   return (
-    // <CreateProviderProject.Provider value={{ ...data }}>
-    <Layout className={styles.layouts}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        style={{ height: "100vh", width: "40rem" }}
-        width={250}
-      >
-        <Slider menu={menu} />
-      </Sider>
-      <Layout
-        className="site-layout"
-        style={{ height: "100vh", overflowY: "auto" }}
-      >
-        <Content>
-          <div
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              height: "96vh",
-              overflow: "auto",
-            }}
-          >
-            <div className="bg-[#ffffff] fixed top-0 left-0 right-4 h-[60px] flex items-center px-10 z-10 shadow-md">
-              <div className="flex item-center w-[250px]">
-                <Image src={LogoShask} preview={false} height={25} />
-                <Text
-                  className="!text-[#000] font-bold block text-[20px] ml-[4px]"
-                  style={{ fontFamily: "Dancing Script" }}
-                >
-                  hask
-                </Text>
+    <CreateProviderProject.Provider value={{ ...data }}>
+      <Layout className={styles.layouts}>
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          style={{ height: "100vh", width: "40rem", overflowY: "auto" }}
+          width={250}
+        >
+          <Slider menu={menu} />
+        </Sider>
+        <Layout
+          className="site-layout"
+          style={{ height: "100vh", overflowY: "auto" }}
+        >
+          <Content>
+            <div
+              className="site-layout-background"
+              style={{
+                padding: 24,
+                height: "96vh",
+                overflow: "auto",
+              }}
+            >
+              <div className="bg-[#ffffff] fixed top-0 left-0 right-4 h-[60px] flex items-center px-10 z-10 shadow-md">
+                <div className="flex item-center w-[250px]">
+                  <Image src={LogoShask} preview={false} height={25} />
+                  <Text
+                    className="!text-[#000] font-bold block text-[20px] ml-[4px]"
+                    style={{ fontFamily: "Dancing Script" }}
+                  >
+                    hask
+                  </Text>
+                </div>
+                <ContentCenter />
               </div>
-              <ContentCenter />
+              <Contents />
             </div>
-            <Contents />
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        ></Footer>
+          </Content>
+          <Footer
+            style={{
+              textAlign: "center",
+            }}
+          ></Footer>
+        </Layout>
       </Layout>
-    </Layout>
-    // </CreateProviderProject.Provider>
+    </CreateProviderProject.Provider>
   );
 };
 

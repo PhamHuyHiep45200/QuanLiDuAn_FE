@@ -3,23 +3,35 @@ import { Row, Col, Space, Avatar, Button, Card, Typography, Image } from "antd";
 import { getNotifycations } from "../../services/project";
 import { openCustomNotificationWithIcon } from "../../common/Notifycations";
 import { updateNitifyProject } from "../../services/user-project";
+import { updateStatusNotifyGroup } from "../../services/user-group";
+import moment from "moment";
+import { ContextProvider } from "../../context/ContextProvider";
 
 const { Text } = Typography;
 
 const getName = (name: string) => {
-  const nameSplit = name?.trim()?.split("");
-  return nameSplit[0];
+  return name?.trim()?.split("")[0];
 };
 function NotifyCations() {
+  const socket = React.useContext(ContextProvider);
+  const id_user: any = localStorage.getItem("id_user");
   const [data, setData] = useState<any>([]);
 
   useEffect(() => {
     getNotyfi();
   }, []);
 
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+    return () => {
+      socket.off("connect");
+    };
+  }, []);
+
   const getNotyfi = async () => {
-    const id: any = localStorage.getItem("id_user");
-    const response = await getNotifycations(+id);
+    const response = await getNotifycations(+id_user);
     if (response.data.status === 200) {
       setData(response.data.data);
     } else {
@@ -30,18 +42,39 @@ function NotifyCations() {
       );
     }
   };
-  const handleSubmit = async (id: number, value: string) => {
-    const response = await updateNitifyProject(id, { status: value });
-    console.log(response);
+  const handleSubmit = async (id: number, value: string, type: string) => {
+    if (type === "project") {
+      const response = await updateNitifyProject(id, {
+        status: value,
+        id_user: +id_user,
+      });
+      console.log(response);
 
-    if (response.data) {
-      getNotyfi();
+      if (response.data) {
+        getNotyfi();
+      } else {
+        openCustomNotificationWithIcon(
+          "error",
+          "action notify",
+          "action notifications error"
+        );
+      }
     } else {
-      openCustomNotificationWithIcon(
-        "error",
-        "action notify",
-        "action notifications error"
-      );
+      const response = await updateStatusNotifyGroup(id, {
+        status: value,
+        id_user: id_user,
+      });
+      console.log(response);
+
+      if (response.data) {
+        getNotyfi();
+      } else {
+        openCustomNotificationWithIcon(
+          "error",
+          "action notify",
+          "action notifications error"
+        );
+      }
     }
   };
   return (
@@ -57,7 +90,8 @@ function NotifyCations() {
                 <Avatar
                   size="large"
                   src={
-                    item?.User?.thumbnail?.length > 0 && item?.User?.thumbnail
+                    item?.UserParent?.thumbnail?.length > 0 &&
+                    item?.UserParent?.thumbnail
                   }
                 >
                   {getName(item?.UserParent?.email)}
@@ -73,26 +107,28 @@ function NotifyCations() {
                   </Text>
                   <Text className="font-medium mr-[4px]">{item?.type}</Text>
                   <Text className="text-[18px] font-medium !text-[red]">
-                    {item?.Project?.name}
+                    {item?.Project?.name || item?.Group?.name}
                   </Text>
                 </Text>
                 <Text className="block text-[14px] !text-[#888]">
                   ({item?.UserParent?.email})
                 </Text>
                 <Text className="block text-[12px] !text-[#999] mb-[10px]">
-                  2 hours ago
+                  {moment(item?.updatedAt).fromNow()}
                 </Text>
                 <Space>
                   <Button
                     type="primary"
                     className="!rounded-[6px] !font-medium"
-                    onClick={() => handleSubmit(item?.id, "APPROVED")}
+                    onClick={() =>
+                      handleSubmit(item?.id, "APPROVED", item?.type)
+                    }
                   >
                     accept
                   </Button>
                   <Button
                     className="!rounded-[6px] !bg-[#e1e0e0] !font-medium"
-                    onClick={() => handleSubmit(item?.id, "REJECT")}
+                    onClick={() => handleSubmit(item?.id, "REJECT", item?.type)}
                   >
                     cancle
                   </Button>

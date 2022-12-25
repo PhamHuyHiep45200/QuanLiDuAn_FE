@@ -1,13 +1,6 @@
 import React from "react";
-import { Table, Space, Avatar, Tag, Popover, Typography } from "antd";
-import {
-  ShareAltOutlined,
-  CloseCircleOutlined,
-  PlayCircleTwoTone,
-  FireOutlined,
-  FireTwoTone,
-} from "@ant-design/icons";
-import StatusTask from "../../../common/StatusTask";
+import { Table, Space, Avatar, Tag, Typography } from "antd";
+import { CloseCircleOutlined, PlayCircleTwoTone } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 import AssignUser from "../../../common/AssignUser";
 import moment from "moment";
@@ -16,22 +9,16 @@ import styles from "../task.module.scss";
 import Description from "./actions-task/Description";
 import { getColor } from "./task";
 import Date from "./actions-task/Date";
+import DeleteTask from "./actions-task/DeleteTask";
+const { Text } = Typography;
 
 interface DataType {
   key: React.Key;
   description?: string;
   children?: any;
 }
-const { Text } = Typography;
 
 function TableTask({ task, getTasks }: any) {
-  const [avatar, setAvatar] = React.useState<Array<any>>([
-    {
-      color: "#87d068",
-      name: "H",
-    },
-  ]);
-  const [fire, setFire] = React.useState(false);
   const [openTableTask, setOpenTableTask] = React.useState(true);
   const columns: ColumnsType<DataType> = [
     {
@@ -43,45 +30,56 @@ function TableTask({ task, getTasks }: any) {
       title: "assign",
       key: "id",
       align: "center",
-      render: (data) => (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Avatar.Group maxCount={2}>
-            {avatar.map((data: any, index: number) => (
+      render: (data) => {
+        return (
+          <div className="w-full flex justify-center">
+            <div
+              style={{ display: "flex", alignItems: "center" }}
+              className={`relative w-[30px] cursor-pointer justify-center ${styles.taskUser}`}
+            >
               <Avatar
-                className="relative"
-                key={index}
                 size={27}
-                style={{ overflow: "unset" }}
+                style={{ border: "1px solid #d3d3d3" }}
+                src={
+                  data?.UserTask?.length > 0 &&
+                  data?.UserTask[0].User?.thumbnail
+                }
               >
                 {data.name}
-                <CloseCircleOutlined className="absolute top-[-2px] right-[-7px] !text-[#000] bg-[#fff] rounded-full cursor-pointer text-[14px]" />
               </Avatar>
-            ))}
-          </Avatar.Group>
-          <AssignUser />
-        </div>
-      ),
+              <CloseCircleOutlined
+                className={`absolute top-[-2px] right-[-1px] !text-[#555] bg-[#fff] rounded-full cursor-pointer text-[14px] ${styles.taskUserClose}`}
+              />
+              {/* <AssignUser /> */}
+            </div>
+          </div>
+        );
+      },
     },
     {
-      title: "assign manager",
+      title: "manager",
       key: "id",
       align: "center",
       render: (data) => (
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <Avatar.Group maxCount={2}>
-            {avatar.map((data: any, index: number) => (
-              <Avatar
-                className="relative"
-                key={index}
-                size={27}
-                style={{ overflow: "unset" }}
-              >
-                {data.name}
-                <CloseCircleOutlined className="absolute top-[-2px] right-[-7px] !text-[#000] bg-[#fff] rounded-full cursor-pointer text-[14px]" />
-              </Avatar>
-            ))}
-          </Avatar.Group>
-          <AssignUser />
+        <div className="w-full flex justify-center">
+          <div
+            style={{ display: "flex", alignItems: "center" }}
+            className={`relative w-[30px] cursor-pointer justify-center ${styles.taskUser}`}
+          >
+            <Avatar
+              size={27}
+              style={{ border: "1px solid #d3d3d3" }}
+              src={
+                data?.UserTask?.length > 0 && data?.UserTask[0].User?.thumbnail
+              }
+            >
+              {data.name}
+            </Avatar>
+            <CloseCircleOutlined
+              className={`absolute top-[-2px] right-[-1px] !text-[#555  ] bg-[#fff] rounded-full cursor-pointer text-[14px] ${styles.taskUserClose}`}
+            />
+            {/* <AssignUser /> */}
+          </div>
         </div>
       ),
     },
@@ -113,40 +111,21 @@ function TableTask({ task, getTasks }: any) {
         <>
           {/* <RangePicker /> */}
           <Space style={{ cursor: "pointer" }}>
-            <Tag color="red">{timeWork(data.end_Time)}</Tag>
+            <Text strong type="danger">
+              {timeWork(data.end_Time)}
+            </Text>
           </Space>
         </>
       ),
     },
     {
-      title: "level",
+      title: "delete",
       align: "center",
-      dataIndex: "",
       key: "id",
-      render: (data) => (
-        <>
-          {fire ? (
-            <FireTwoTone
-              style={{ fontSize: "20px", color: "red" }}
-              onClick={() => setFire(!fire)}
-            />
-          ) : (
-            <FireOutlined
-              style={{ fontSize: "20px", color: "#888" }}
-              onClick={() => setFire(!fire)}
-            />
-          )}
-        </>
-      ),
-    },
-    {
-      title: "action",
-      align: "center",
-      dataIndex: "",
-      key: "x",
-      render: () => <a>Delete</a>,
+      render: (data) => <DeleteTask data={data} getTasks={getTasks} />,
     },
   ];
+
   return (
     <div className={`mb-20 ${styles.taskTable}`}>
       <div className="mb-[-6px] flex items-center">
@@ -172,6 +151,7 @@ function TableTask({ task, getTasks }: any) {
           dataSource={task?.data}
           defaultExpandAllRows
           pagination={false}
+          rowKey="id"
         />
       )}
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import LoadingDashboard from "../../common/LoadingDashboard";
 import { openCustomNotificationWithIcon } from "../../common/Notifycations";
@@ -6,9 +6,11 @@ import { getTaskAll } from "../../services/task";
 import EmptyData from "./components/EmptyData";
 import Tasks from "./components/Tasks";
 import ModalEmpty from "./components/modal/ModalEmpty";
+import { ContextProvider } from "../../context/ContextProvider";
 const datas: any = [];
 function Task() {
   const { id }: any = useParams();
+  const socket = useContext(ContextProvider);
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<Array<any>>([]);
@@ -16,6 +18,12 @@ function Task() {
   useEffect(() => {
     setLoading(true);
     getTasks();
+    socket.on("notify", (data) => {
+      console.log(data);
+    });
+    return () => {
+      socket.off("notify");
+    };
   }, [id]);
   const getTasks = async () => {
     const response = await getTaskAll(+id);
@@ -37,7 +45,12 @@ function Task() {
         <EmptyData open={open} setOpen={setOpen} getTasks={getTasks} />
       )}
 
-      <ModalEmpty open={open} setOpen={setOpen} getTasks={getTasks} />
+      <ModalEmpty
+        open={open}
+        setOpen={setOpen}
+        getTasks={getTasks}
+        id_taskParent={null}
+      />
     </>
   );
 }

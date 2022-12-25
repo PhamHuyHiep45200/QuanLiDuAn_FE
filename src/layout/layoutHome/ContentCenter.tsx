@@ -8,28 +8,30 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Button, Tooltip, Typography } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
+import { CreateProviderProject } from ".";
 const { Text } = Typography;
 const dataTabs = [
   {
     label: "List",
     value: "task",
-    router: "/home/task/1",
+    router: "/home/task/",
     icon: <UnorderedListOutlined className="text-[18px]" />,
   },
   {
     label: "Chart",
     value: "chart",
-    router: "/home/chart/2",
+    router: "/home/chart/",
     icon: <AreaChartOutlined className="text-[18px]" />,
   },
 ];
 
 function ContentCenter() {
+  const { idItem } = React.useContext(CreateProviderProject);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const handleTabs = (route: string) => {
-    navigate(route);
+    navigate(route + idItem);
   };
 
   return (
@@ -56,32 +58,6 @@ function ContentCenter() {
             </Text>
           </div>
         ))}
-      </div>
-      <div className="flex items-center">
-        <Avatar.Group maxCount={4}>
-          <Avatar src="https://joeschmoe.io/api/v1/random" />
-          <Avatar style={{ backgroundColor: "#f56a00" }}>K</Avatar>
-          <Tooltip title="Ant User" placement="top">
-            <Avatar
-              style={{ backgroundColor: "#87d068" }}
-              icon={<UserOutlined />}
-            />
-          </Tooltip>
-          <Avatar
-            style={{ backgroundColor: "#1890ff" }}
-            icon={<AntDesignOutlined />}
-          />
-          <Avatar
-            style={{ backgroundColor: "#1690ff" }}
-            icon={<AntDesignOutlined />}
-          />
-        </Avatar.Group>
-        <Button className="!rounded-[4px] !bg-[#5555da] !text-[#fff] ml-[20px]">
-          <div className="flex items-center">
-            <PlusCircleOutlined className="mr-2" />
-            user
-          </div>
-        </Button>
       </div>
     </div>
   );

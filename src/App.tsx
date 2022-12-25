@@ -1,5 +1,6 @@
 import React from "react";
 import "antd/dist/antd.min.css";
+// import "../lib/css/react-big-calendar.css";
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import Routers from "./routers";
@@ -7,6 +8,7 @@ import Routers from "./routers";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { ContextSocketProvider, socket } from "./context/ContextProvider";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,7 +21,7 @@ const firebaseConfig = {
   storageBucket: "quanlicongviec-82228.appspot.com",
   messagingSenderId: "425810065506",
   appId: "1:425810065506:web:47151e631d8cf579d8793b",
-  measurementId: "G-M181VBY47W"
+  measurementId: "G-M181VBY47W",
 };
 
 // Initialize Firebase
@@ -28,9 +30,11 @@ const analytics = getAnalytics(app);
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routers />
-    </BrowserRouter>
+    <ContextSocketProvider value={socket}>
+      <BrowserRouter>
+        <Routers />
+      </BrowserRouter>
+    </ContextSocketProvider>
   );
 }
 

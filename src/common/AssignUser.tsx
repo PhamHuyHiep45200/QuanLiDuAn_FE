@@ -7,8 +7,7 @@ import { searchUserQuery } from "../services/item";
 import { openCustomNotificationWithIcon } from "./Notifycations";
 const { Text } = Typography;
 const getName = (name: string) => {
-  const nameSplit = name.trim().split("");
-  return nameSplit[0];
+  return name.trim().split("")[0];
 };
 const avatar: any = [];
 function AssignUser({ setState }: any) {

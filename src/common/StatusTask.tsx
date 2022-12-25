@@ -2,6 +2,7 @@ import React from "react";
 import { Popover } from "antd";
 import { updateTask } from "../services/task";
 import { openCustomNotificationWithIcon } from "./Notifycations";
+import { ContextProvider } from "../context/ContextProvider";
 
 const data = [
   {
@@ -37,6 +38,7 @@ const data = [
 ];
 
 function StatusTask({ initColor, idTask, getTasks }: any) {
+  const socket = React.useContext(ContextProvider);
   const [color, setColor] = React.useState<string>(initColor);
   const [open, setOpen] = React.useState<boolean>(false);
   const changeStatus = async (item: any) => {
@@ -45,6 +47,7 @@ function StatusTask({ initColor, idTask, getTasks }: any) {
       getTasks();
       setColor(item.color);
       setOpen(false);
+      socket.emit("actionNotify", { status: item.type });
     } else {
       openCustomNotificationWithIcon("error", "error", "error");
     }

@@ -6,3 +6,10 @@ export async function getUsers(params: any) {
     params,
   });
 }
+
+export async function searchUsers(params: any) {
+  return request(`/user/search-user`, {
+    method: "GET",
+    params,
+  });
+}

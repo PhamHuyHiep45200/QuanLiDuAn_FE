@@ -53,7 +53,11 @@ function Chart() {
             <Col span={6} key={chart.id} className="min-h-[300px]">
               <Card className="!rounded-[6px] shadow-md h-full">
                 <div className="flex items-center">
-                  <Avatar>{chart.email[0]}</Avatar>
+                  <div>
+                    <Avatar src={chart?.thumbnail && chart?.thumbnail}>
+                      {chart.email[0]}
+                    </Avatar>
+                  </div>
                   <div className="flex flex-col justify-start ml-[10px]">
                     <Text className="block font-medium truncate">
                       {chart.firstName} {chart.lastName}
@@ -130,7 +134,7 @@ function Chart() {
         setOpen={setOpenDescription}
         title="giai ddoanj 1"
         data={dataTask}
-        getTasks={getChart}
+        refesh={getChart}
       />
     </div>
   );

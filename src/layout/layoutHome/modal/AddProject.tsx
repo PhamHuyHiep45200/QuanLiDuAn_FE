@@ -136,7 +136,7 @@ function AddProject(props: AddProjectProps) {
           </>
         ) : (
           <Form.Item label="name" name={typeModal}>
-            <Input></Input>
+            <Input />
           </Form.Item>
         )}
         <div style={{ textAlign: "center" }}>

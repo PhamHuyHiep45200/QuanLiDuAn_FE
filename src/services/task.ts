@@ -18,3 +18,8 @@ export async function updateTask(id: number, params: any) {
     params,
   });
 }
+export async function deleteTask(id: number) {
+  return request(`/task/delete/${id}`, {
+    method: "DELETE",
+  });
+}
