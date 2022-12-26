@@ -1,7 +1,7 @@
 import {
   Button,
   DatePicker,
-  Drawer,
+  Modal,
   Form,
   Radio,
   Space,
@@ -39,17 +39,21 @@ function Register(props: RegisterProps) {
     }, 1000);
   };
   return (
-    <Drawer
-      title="Close"
-      placement="right"
-      onClose={onClose}
+    <Modal
+      title="Register"
+      onCancel={onClose}
       open={openRegister}
-      width={600}
+      footer={false}
     >
       <Space
         direction="vertical"
         align="center"
-        style={{ width: "100%", height: "100%", justifyContent: "center" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <Title level={4} style={{ width: "100%", textAlign: "center" }}>
           Register Shash
@@ -132,7 +136,7 @@ function Register(props: RegisterProps) {
           </Space>
         </Form>
       </Space>
-    </Drawer>
+    </Modal>
   );
 }
 

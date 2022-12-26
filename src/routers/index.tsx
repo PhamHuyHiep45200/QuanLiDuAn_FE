@@ -9,8 +9,13 @@ import WorkMe from "../pages/me";
 import WorkMeHome from "../pages/me/components/WorkMeHome";
 import WorkMeTask from "../pages/me/components/WorkMeTask";
 import NotifyCations from "../pages/notifications";
+import ProjectSupperAdmin from "../pages/supper-admin/ProjectSupperAdmin";
+import SupperAdmin from "../pages/supper-admin/SupperAdmin";
 import Task from "../pages/task";
 import Top from "../pages/top";
+import GroupSupperAdmin from "../pages/supper-admin/GroupSupperAdmin";
+import MemberSupperAdmin from "../pages/supper-admin/MemberSupperAdmin";
+import ItemSupperAdmin from "../pages/supper-admin/ItemSupperAdmin";
 // interface Router {
 //   path: string;
 //   component: () => JSX.Element;
@@ -19,6 +24,28 @@ const routers = [
   {
     path: "/",
     component: Top,
+  },
+  {
+    path: "/supper-admin",
+    component: SupperAdmin,
+    children: [
+      {
+        path: "/supper-admin/project",
+        component: ProjectSupperAdmin,
+      },
+      {
+        path: "/supper-admin/group",
+        component: GroupSupperAdmin,
+      },
+      {
+        path: "/supper-admin/item",
+        component: ItemSupperAdmin,
+      },
+      {
+        path: "/supper-admin/member",
+        component: MemberSupperAdmin,
+      },
+    ],
   },
   {
     path: "/me",

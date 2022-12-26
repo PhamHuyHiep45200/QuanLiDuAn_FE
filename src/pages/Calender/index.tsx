@@ -6,7 +6,7 @@ import { event } from "./event";
 const localizer = momentLocalizer(moment);
 
 function Calender() {
-  const defaultDate = useMemo(() => new Date(2015, 3, 1), []);
+  const defaultDate = useMemo(() => new Date(), []);
   return (
     <div className="h-[1000px]">
       <Calendar

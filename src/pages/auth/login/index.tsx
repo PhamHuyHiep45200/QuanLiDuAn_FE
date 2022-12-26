@@ -1,4 +1,4 @@
-import { Button, Drawer, Form, Space, Typography } from "antd";
+import { Button, Modal, Form, Space, Typography } from "antd";
 import Input from "antd/lib/input/Input";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -14,10 +14,12 @@ interface LoginProps {
 
 function Login(props: LoginProps) {
   const { openLogin, setOpenLogin } = props;
+  const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = React.useState<boolean>(false);
   const onClose = () => {
     setOpenLogin(false);
+    form.resetFields();
   };
 
   const handleSubmit = async (value: LoginType) => {
@@ -44,13 +46,7 @@ function Login(props: LoginProps) {
     }
   };
   return (
-    <Drawer
-      title="Close"
-      placement="right"
-      onClose={onClose}
-      open={openLogin}
-      width={600}
-    >
+    <Modal open={openLogin} onCancel={onClose} title="Login" footer={false}>
       <Space
         direction="vertical"
         align="center"
@@ -60,6 +56,7 @@ function Login(props: LoginProps) {
           Login Shash
         </Title>
         <Form
+          form={form}
           colon={false}
           style={{ marginBottom: "200px" }}
           onFinish={handleSubmit}
@@ -91,7 +88,7 @@ function Login(props: LoginProps) {
           </Space>
         </Form>
       </Space>
-    </Drawer>
+    </Modal>
   );
 }
 
