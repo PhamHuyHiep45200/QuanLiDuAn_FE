@@ -1,9 +1,10 @@
-import { Button, Modal, Form, Space, Typography } from "antd";
+import { Button, Modal, Form, Space, Typography, Tabs } from "antd";
 import Input from "antd/lib/input/Input";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { openCustomNotificationWithIcon } from "../../../common/Notifycations";
 import { login, LoginType } from "../../../services/auth";
+import { forgotPassword } from "../../../services/user";
 
 const { Title } = Typography;
 
@@ -45,49 +46,116 @@ function Login(props: LoginProps) {
       setLoading(false);
     }
   };
+  const handleSendMail = async (value: any) => {
+    setLoading(true);
+    const response = await forgotPassword(value);
+    if (response?.data?.status === 200) {
+      setLoading(false);
+      openCustomNotificationWithIcon(
+        "success",
+        "Quên mật khẩu",
+        "Vui lòng check email để thay đổi mật khẩu"
+      );
+    } else {
+      setLoading(false);
+      openCustomNotificationWithIcon(
+        "error",
+        "Quên mật khẩu",
+        "Đã có lỗi xảy ra?"
+      );
+    }
+  };
+
   return (
     <Modal open={openLogin} onCancel={onClose} title="Login" footer={false}>
-      <Space
-        direction="vertical"
-        align="center"
-        style={{ width: "100%", height: "100%", justifyContent: "center" }}
-      >
-        <Title level={4} style={{ width: "100%", textAlign: "center" }}>
-          Login Shash
-        </Title>
-        <Form
-          form={form}
-          colon={false}
-          style={{ marginBottom: "200px" }}
-          onFinish={handleSubmit}
-        >
-          <Form.Item
-            name="email"
-            label={
-              <div style={{ minWidth: "60px", textAlign: "left" }}>Email</div>
-            }
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="password"
-            label={
-              <div style={{ minWidth: "60px", textAlign: "left" }}>
-                Password
-              </div>
-            }
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-            <Input />
-          </Form.Item>
-          <Space direction="vertical" align="center" style={{ width: "100%" }}>
-            <Button htmlType="submit" type="primary" loading={loading}>
-              Login
-            </Button>
-          </Space>
-        </Form>
-      </Space>
+      <Tabs
+        defaultActiveKey="1"
+        items={[
+          {
+            label: `Đăng nhập`,
+            key: "1",
+            children: (
+              <Space
+                direction="vertical"
+                align="center"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  justifyContent: "center",
+                }}
+              >
+                <Title level={4} style={{ width: "100%", textAlign: "center" }}>
+                  Login Shash
+                </Title>
+                <Form
+                  form={form}
+                  colon={false}
+                  style={{ marginBottom: "50px" }}
+                  onFinish={handleSubmit}
+                >
+                  <Form.Item
+                    name="email"
+                    label={
+                      <div style={{ minWidth: "60px", textAlign: "left" }}>
+                        Email
+                      </div>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your username!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Form.Item
+                    name="password"
+                    label={
+                      <div style={{ minWidth: "60px", textAlign: "left" }}>
+                        Password
+                      </div>
+                    }
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                  <Space
+                    direction="vertical"
+                    align="center"
+                    style={{ width: "100%" }}
+                  >
+                    <Button htmlType="submit" type="primary" loading={loading}>
+                      Login
+                    </Button>
+                  </Space>
+                </Form>
+              </Space>
+            ),
+          },
+          {
+            label: `Quên mật khẩu`,
+            key: "2",
+            children: (
+              <Form onFinish={handleSendMail}>
+                <Form.Item name="email" label="email">
+                  <Input />
+                </Form.Item>
+                <div className="text-center">
+                  <Button htmlType="submit" type="primary" loading={loading}>
+                    Gửi qua Email
+                  </Button>
+                </div>
+              </Form>
+            ),
+          },
+        ]}
+      />
     </Modal>
   );
 }

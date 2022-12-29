@@ -1,14 +1,16 @@
-import React from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "antd/dist/antd.min.css";
 // import "../lib/css/react-big-calendar.css";
 import "./App.css";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import Routers from "./routers";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { ContextSocketProvider, socket } from "./context/ContextProvider";
+import { getOneUser } from "./services/user";
+import { openCustomNotificationWithIcon } from "./common/Notifycations";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,13 +30,37 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
+export const ContextProvider = createContext<any>(null);
+
 function App() {
+  const [user, setUser] = useState();
+  useEffect(() => {
+    const id_user = localStorage.getItem("id_user");
+    if (id_user) {
+      getInfo(+id_user);
+    }
+  });
+  const getInfo = async (id: number) => {
+    const response = await getOneUser(+id);
+    if (response.data.status === 200) {
+      if (response.data.data.role !== "USER") {
+      }
+      setUser(response.data.data);
+    } else {
+      openCustomNotificationWithIcon("error", "get userprovider", "error");
+    }
+  };
+  const data = React.useMemo(() => {
+    return { user, setUser };
+  }, [user]);
   return (
-    <ContextSocketProvider value={socket}>
-      <BrowserRouter>
-        <Routers />
-      </BrowserRouter>
-    </ContextSocketProvider>
+    <ContextProvider.Provider value={data}>
+      <ContextSocketProvider value={socket}>
+        <BrowserRouter>
+          <Routers />
+        </BrowserRouter>
+      </ContextSocketProvider>
+    </ContextProvider.Provider>
   );
 }
 

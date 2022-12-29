@@ -6,9 +6,19 @@ import {
   UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Tooltip, Typography } from "antd";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Form,
+  Input,
+  Modal,
+  Tooltip,
+  Typography,
+} from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CreateProviderMe } from ".";
+import { CreateProviderProject } from "../layoutHome";
 const { Text } = Typography;
 const dataTabs = [
   {
@@ -31,7 +41,7 @@ function ContentCenter() {
   const navigate = useNavigate();
 
   const handleTabs = (route: string) => {
-    navigate(route + idItem);
+    navigate(route + idItem ?? 0);
   };
 
   return (

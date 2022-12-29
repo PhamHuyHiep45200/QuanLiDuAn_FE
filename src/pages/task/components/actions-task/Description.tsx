@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Input, Form } from "antd";
 import StatusTask from "../../../../common/StatusTask";
-import { ShareAltOutlined } from "@ant-design/icons";
+import { ShareAltOutlined, LockFilled } from "@ant-design/icons";
 import { getColor } from "../task";
 import { updateTask } from "../../../../services/task";
 import { openCustomNotificationWithIcon } from "../../../../common/Notifycations";
@@ -48,6 +48,7 @@ function Description({ data, getTasks }: any) {
           />
         </div>
         <div className="ml-3 flex items-center">
+          {data?.private && <LockFilled className="mr-[5px]" />}
           {!check ? (
             <Text
               className="cursor-pointer font-normal !text-[#000] whitespace-pre-line"

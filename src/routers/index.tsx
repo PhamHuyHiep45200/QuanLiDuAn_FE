@@ -16,6 +16,7 @@ import Top from "../pages/top";
 import GroupSupperAdmin from "../pages/supper-admin/GroupSupperAdmin";
 import MemberSupperAdmin from "../pages/supper-admin/MemberSupperAdmin";
 import ItemSupperAdmin from "../pages/supper-admin/ItemSupperAdmin";
+import ChangePassWord from "../pages/auth/forgot-password/ForgotPassWord";
 // interface Router {
 //   path: string;
 //   component: () => JSX.Element;
@@ -24,6 +25,10 @@ const routers = [
   {
     path: "/",
     component: Top,
+  },
+  {
+    path: "/change-pasword/:id",
+    component: ChangePassWord,
   },
   {
     path: "/supper-admin",
@@ -90,7 +95,7 @@ const routers = [
         component: Calender,
       },
       {
-        path: "/home/docs",
+        path: "/home/docs/:id",
         component: Docs,
       },
     ],

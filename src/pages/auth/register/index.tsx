@@ -10,6 +10,8 @@ import {
 } from "antd";
 import Input from "antd/lib/input/Input";
 import React from "react";
+import { openCustomNotificationWithIcon } from "../../../common/Notifycations";
+import { createUser } from "../../../services/user";
 
 const { Title } = Typography;
 
@@ -30,13 +32,29 @@ function Register(props: RegisterProps) {
     setOpenRegister(false);
   };
 
-  const handleSubmit = (value: SubmitForm) => {
-    console.log(value);
+  const handleSubmit = async (value: any) => {
     setLoading(true);
-    setTimeout(() => {
+    const dataSubmit = {
+      ...value,
+      birthday: value.birthday.toISOString(),
+      thumbnail: "",
+      role: "USER",
+    };
+    const response = await createUser(dataSubmit);
+    console.log(response, dataSubmit);
+
+    if (response?.data?.status === 200) {
       setLoading(false);
+      openCustomNotificationWithIcon(
+        "success",
+        "Đăng kí tài khoản",
+        "Bạn đã đăng kí thành công"
+      );
       setOpenRegister(false);
-    }, 1000);
+    } else {
+      setLoading(false);
+      openCustomNotificationWithIcon("error", "error", "error");
+    }
   };
   return (
     <Modal
@@ -86,7 +104,7 @@ function Register(props: RegisterProps) {
             <Input />
           </Form.Item>
           <Form.Item
-            name="birthDay"
+            name="birthday"
             label={
               <div style={{ minWidth: "60px", textAlign: "left" }}>
                 Birth Day

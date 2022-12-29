@@ -75,6 +75,10 @@ function ListMember() {
   );
   React.useEffect(() => {
     getDataMember();
+    if (localStorage.getItem("itemTask")) {
+      localStorage.removeItem("itemTask");
+    }
+    localStorage.setItem("itemTask", id);
   }, [pathname]);
 
   const getDataMember = () => {

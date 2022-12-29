@@ -31,7 +31,9 @@ const AddUser = ({ open, setOpen, type, refesh }: any) => {
         role: value.role,
       };
       const response = await addUserProject(dataSubmit);
-      if (response.data.status === 200) {
+      console.log(response);
+
+      if (response.data) {
         setLoading(false);
         setOpen(false);
         refesh();
@@ -52,9 +54,8 @@ const AddUser = ({ open, setOpen, type, refesh }: any) => {
       };
 
       const response = await addUserGroup(dataSubmit);
-      console.log(response.data);
 
-      if (response.data.status === 200) {
+      if (response.data) {
         setLoading(false);
         setOpen(false);
         refesh();

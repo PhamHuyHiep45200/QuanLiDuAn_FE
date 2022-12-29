@@ -7,9 +7,10 @@ export async function createTask(data: any) {
   });
 }
 
-export async function getTaskAll(id: number) {
+export async function getTaskAll(id: number, params?: any) {
   return request(`/task/${id}`, {
     method: "GET",
+    params,
   });
 }
 export async function updateTask(id: number, params: any) {

@@ -8,6 +8,7 @@ import {
   Typography,
   Avatar,
   Skeleton,
+  Switch,
 } from "antd";
 import Upload from "antd/es/upload";
 import { storage } from "../../../../firebase";
@@ -40,9 +41,9 @@ function AddTask(props: any) {
       thumbnail = value.thumbnail.map((thu: any) => thu.url);
     }
     const startTime =
-      value.estimate.length > 0 ? value.estimate[0].toISOString() : null;
+      value?.estimate?.length > 0 ? value.estimate[0].toISOString() : null;
     const endTime =
-      value.estimate.length > 0 ? value.estimate[1].toISOString() : null;
+      value?.estimate?.length > 0 ? value.estimate[1].toISOString() : null;
     const dataSubmit = {
       id_item: +id,
       id_user: user ? user?.id : null,
@@ -52,6 +53,7 @@ function AddTask(props: any) {
       userManager: userManager ? userManager?.id : null,
       start_Time: startTime,
       end_Time: endTime,
+      private: value.private,
       thumbnail: thumbnail,
     };
     console.log(dataSubmit);
@@ -98,6 +100,7 @@ function AddTask(props: any) {
     setOpen(false);
     setUser(undefined);
     setUserManager(undefined);
+    setFileList([]);
     form.resetFields();
   };
   const handleDeleteImage = (value: any) => {
@@ -112,7 +115,6 @@ function AddTask(props: any) {
     setFileList([...data]);
     form.setFieldValue("thumbnail", data);
   };
-  console.log(id_taskParent);
 
   return (
     <Modal
@@ -122,7 +124,13 @@ function AddTask(props: any) {
       onCancel={handleCancel}
       width={800}
     >
-      <Form onFinish={handleSubmit} labelAlign="left" colon={false} form={form}>
+      <Form
+        onFinish={handleSubmit}
+        labelAlign="left"
+        colon={false}
+        form={form}
+        initialValues={{ private: false }}
+      >
         <div className="flex items-center mb-2">
           <Text className="min-w-[125px]">assign user</Text>
           {user ? (
@@ -171,6 +179,12 @@ function AddTask(props: any) {
           name="estimate"
         >
           <RangePicker />
+        </Form.Item>
+        <Form.Item
+          label={<div className="min-w-[115px]">riêng tư</div>}
+          name="private"
+        >
+          <Switch />
         </Form.Item>
         <Form.Item
           label={<div className="min-w-[115px]">desription</div>}
