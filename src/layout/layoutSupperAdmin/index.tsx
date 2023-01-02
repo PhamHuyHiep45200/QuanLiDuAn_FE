@@ -30,6 +30,12 @@ function LayoutSupperAdmin() {
             items={
               [
                 {
+                  key: "0",
+                  icon: <UserOutlined />,
+                  label: "Thống kê",
+                  path: "/supper-admin/",
+                },
+                {
                   key: "1",
                   icon: <UserOutlined />,
                   label: "Dự án",

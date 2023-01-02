@@ -13,6 +13,12 @@ export async function getUserGroup(id: number) {
   });
 }
 
+export async function getUserGroupItem(id: number) {
+  return request(`/user-group/task/${id}`, {
+    method: "GET",
+  });
+}
+
 export async function updateStatusNotifyGroup(id: number, data: any) {
   return request(`/user-group/${id}`, {
     method: "PUT",

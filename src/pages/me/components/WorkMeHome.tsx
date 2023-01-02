@@ -10,6 +10,8 @@ import {
   Form,
   Input,
   DatePicker,
+  Space,
+  Typography,
 } from "antd";
 import Folder from "../../../assets/image/project.png";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +21,10 @@ import { openCustomNotificationWithIcon } from "../../../common/Notifycations";
 import { getAllWorkMe } from "../../../services/work-me";
 import TableTask from "./TableTask";
 import { createItem } from "../../../services/item";
+import { PlusOutlined } from "@ant-design/icons";
+import EmptyImage from "../../../assets/image/smile-sad.webp";
+
+const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
 function WorkMeHome() {
@@ -46,6 +52,7 @@ function WorkMeHome() {
       const dataSubmit = {
         id_item: null,
         id_user: +idUser,
+        personCreate: +idUser,
         status: "OPEN",
         taskParentId: null,
         descriptions: value.descriptions,
@@ -67,6 +74,7 @@ function WorkMeHome() {
       const dataSubmit = {
         id_group: null,
         id_user: +idUser,
+        personCreate: +idUser,
         name: value.name,
         startDate: startTime,
         endDate: endTime,
@@ -114,40 +122,69 @@ function WorkMeHome() {
 
   return (
     <div>
-      <div className="text-right my-5">
-        <Button shape="round" type="primary" onClick={() => setOpen(true)}>
-          Tạo công việc
-        </Button>
-      </div>
-      <Row gutter={[16, 16]} className="mb-10">
-        {listItem?.map((da: any) => (
-          <Col
-            span={6}
-            key={da.id}
-            className="flex justify-center items-center"
+      {listItem?.length > 0 || listTask?.length > 0 ? (
+        <div>
+          <div className="text-right my-5">
+            <Button shape="round" type="primary" onClick={() => setOpen(true)}>
+              Tạo công việc
+            </Button>
+          </div>
+          <Row gutter={[16, 16]} className="mb-10">
+            {listItem?.map((da: any) => (
+              <Col
+                span={6}
+                key={da.id}
+                className="flex justify-center items-center"
+              >
+                <div
+                  className="relative w-[80%] h-[40%] cursor-pointer"
+                  onClick={() => navigate(`/me/${da.id}`)}
+                >
+                  <Image
+                    src={Folder}
+                    height={150}
+                    width={170}
+                    preview={false}
+                  />
+                  <div className="absolute top-[80%] left-[15%] translate-x-[-15%] font-bold text-[14px] text-[#444] truncate">
+                    {da.name}
+                  </div>
+                  <div className="mt-[-20px]">
+                    <Progress percent={da.processWork.toFixed(2)} />
+                  </div>
+                </div>
+              </Col>
+            ))}
+          </Row>
+          {listTask.map((task: any) => (
+            <>
+              {task?.data?.length > 0 && (
+                <TableTask task={task} getTasks={getWorkMe} />
+              )}
+            </>
+          ))}
+        </div>
+      ) : (
+        <Space style={{ width: "100%" }} direction="vertical" align="center">
+          <Image src={EmptyImage} preview={false} height={300} />
+          <Title level={4}>Tiếc quá! Bạn chưa có task nào...</Title>
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            className="animate-bounce"
+            style={{
+              background: "linear-gradient(144deg, #0b53da, #fc459b)",
+              display: "flex",
+              alignItems: "center",
+            }}
+            onClick={() => setOpen(true)}
           >
-            <div
-              className="relative w-[80%] h-[40%] cursor-pointer"
-              onClick={() => navigate(`/me/${da.id}`)}
-            >
-              <Image src={Folder} height={150} width={170} preview={false} />
-              <div className="absolute top-[80%] left-[15%] translate-x-[-15%] font-bold text-[14px] text-[#444] truncate">
-                {da.name}
-              </div>
-              <div className="mt-[-20px]">
-                <Progress percent={da.processWork.toFixed(2)} />
-              </div>
-            </div>
-          </Col>
-        ))}
-      </Row>
-      {listTask.map((task: any) => (
-        <>
-          {task?.data?.length > 0 && (
-            <TableTask task={task} getTasks={getWorkMe} />
-          )}
-        </>
-      ))}
+            <PlusOutlined />
+            Công việc của tôi
+          </Button>
+        </Space>
+      )}
       <Modal
         open={open}
         footer={false}

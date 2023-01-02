@@ -5,6 +5,7 @@ import {
   PlusCircleOutlined,
   UnorderedListOutlined,
   LoadingOutlined,
+  CarryOutOutlined,
 } from "@ant-design/icons";
 import {
   Avatar,
@@ -22,11 +23,9 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CreateProviderProject } from ".";
 import moment from "moment";
-import EditInfo from "./EditInfo";
 import { storage } from "../../firebase";
-import { getOneUser, updateInfoUser } from "../../services/user";
+import { changePasswordId, updateInfoUser } from "../../services/user";
 import { openCustomNotificationWithIcon } from "../../common/Notifycations";
-import { async } from "@firebase/util";
 import { ContextProvider } from "../../App";
 const { Text } = Typography;
 const dataTabs = [
@@ -42,6 +41,12 @@ const dataTabs = [
     router: "/home/chart/",
     icon: <AreaChartOutlined className="text-[18px]" />,
   },
+  {
+    label: "Calendar",
+    value: "calendar",
+    router: "/home/calendar/",
+    icon: <CarryOutOutlined className="text-[18px]" />,
+  },
 ];
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -50,10 +55,12 @@ function ContentCenter() {
   const id: any = localStorage.getItem("id_user");
   const { idItem } = React.useContext(CreateProviderProject);
   const [form] = Form.useForm();
+  const [formChangepass] = Form.useForm();
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const [infoUser, setInfoUser] = useState<any>();
+  const [changepass, setChangePass] = useState(false);
   const [image, setImage] = useState(user?.thumbnail);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleTabs = (route: string) => {
@@ -67,6 +74,12 @@ function ContentCenter() {
         onClick={handleInfo}
       >
         Thông tin của tôi
+      </div>
+      <div
+        className="py-[5px] px-5 hover:bg-[#f5f5f5] cursor-pointer"
+        onClick={() => setChangePass(true)}
+      >
+        Đổi mật khẩu
       </div>
       <div
         className="py-[5px] px-5 hover:bg-[#f5f5f5] cursor-pointer"
@@ -86,6 +99,10 @@ function ContentCenter() {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleCancelChangePass = () => {
+    setChangePass(false);
+    formChangepass.resetFields();
   };
   const handleChangeImage = async (e: any) => {
     const file = e.target.files[0];
@@ -127,22 +144,29 @@ function ContentCenter() {
     }
   };
 
-  const getInfo = async () => {
-    // setLoading(true);
-    // const response = await getOneUser(+id);
-    // console.log(response);
-    // if (response.data.status === 200) {
-    //   setLoading(false);
-    //   setInfoUser(response.data.data);
-    //   form.setFieldsValue({
-    //     firstName: response.data.data?.firstName,
-    //     lastName: response.data.data?.lastName,
-    //     phone: response.data.data?.phone,
-    //   });
-    //   setImage(response.data.data.thumbnail);
-    // } else {
-    //   openCustomNotificationWithIcon("error", "error", "error");
-    // }
+  const handleChangePass = async (value: any) => {
+    setLoading(true);
+    const dataSubmit = {
+      passWord: value.password,
+      newPassWord: value.newPassword,
+    };
+    const response = await changePasswordId(id, dataSubmit);
+    if (response.data.status === 200) {
+      setLoading(false);
+      handleCancelChangePass();
+      openCustomNotificationWithIcon(
+        "success",
+        "Đổi mật khẩu",
+        "Đổi mật khẩu thành công"
+      );
+    } else {
+      setLoading(false);
+      openCustomNotificationWithIcon(
+        "error",
+        "Đổi mật khẩu",
+        "Đổi mật khẩu thất bại"
+      );
+    }
   };
 
   return (
@@ -272,6 +296,63 @@ function ContentCenter() {
             </div>
           </div>
         </div>
+      </Modal>
+      <Modal
+        open={changepass}
+        title="Đổi mật khẩu"
+        footer={false}
+        onCancel={handleCancelChangePass}
+      >
+        <Form onFinish={handleChangePass} form={formChangepass}>
+          <Form.Item
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: "không được để trống!",
+              },
+            ]}
+          >
+            <Input.Password placeholder="Mật khẩu" />
+          </Form.Item>
+          <Form.Item
+            name="newPassword"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "không được để trống!",
+              },
+            ]}
+          >
+            <Input.Password placeholder="Mật khẩu Mới" />
+          </Form.Item>
+          <Form.Item
+            name="confirmNewPassword"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "không được để trống!",
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("newPassword") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error("Mật khẩu không khớp!"));
+                },
+              }),
+            ]}
+          >
+            <Input.Password placeholder="Nhập lại mật khẩu mới" />
+          </Form.Item>
+          <div className="text-center">
+            <Button htmlType="submit" type="primary" loading={loading}>
+              Đổi mật khẩu
+            </Button>
+          </div>
+        </Form>
       </Modal>
     </div>
   );

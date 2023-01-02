@@ -60,3 +60,10 @@ export async function forgotPasswordId(id: number, data: any) {
     data,
   });
 }
+
+export async function changePasswordId(id: number, data: any) {
+  return request(`/user/change-password/${id}`, {
+    method: "PUT",
+    data,
+  });
+}

@@ -39,11 +39,17 @@ const data = [
 
 function StatusTask({ initColor, idTask, getTasks }: any) {
   const socket = React.useContext(ContextProvider);
+  const id_user: any = localStorage.getItem("id_user");
   const [color, setColor] = React.useState<string>(initColor);
   const [open, setOpen] = React.useState<boolean>(false);
   const changeStatus = async (item: any) => {
-    const response = await updateTask(+idTask, { status: item.type });
-    if (response.data.status === 200) {
+    const response = await updateTask(+idTask, {
+      status: item.type,
+      idUserChange: +id_user,
+    });
+    console.log(response);
+
+    if (response?.data?.status === 200) {
       getTasks();
       setColor(item.color);
       setOpen(false);

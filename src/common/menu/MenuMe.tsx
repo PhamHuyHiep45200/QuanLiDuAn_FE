@@ -45,11 +45,12 @@ const Add = ({ id, type }: any) => {
     setOpen(false);
   };
   const handleSubmit = async (value: any) => {
-    const id_user: string | null = localStorage.getItem("id_user");
+    const id_user: any = localStorage.getItem("id_user");
     if (type === "group") {
       const dataSubmit = {
         id_project: id,
         id_user: id_user ? +id_user : null,
+        personCreate: +id_user,
         name: value.name,
         startDate: value.date[0].toISOString(),
         endDate: value.date[1].toISOString(),
@@ -70,6 +71,7 @@ const Add = ({ id, type }: any) => {
       const dataSubmit = {
         id_group: id,
         id_user: id_user ? +id_user : null,
+        personCreate: +id_user,
         name: value.name,
       };
       const response = await createItem(dataSubmit);

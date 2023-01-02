@@ -4,15 +4,9 @@ import { HomeOutlined, BellOutlined, UserOutlined } from "@ant-design/icons";
 export const MenuLayoutHome = () => {
   return [
     {
-      key: 1,
-      label: "Home",
-      path: "/home",
-      icon: <HomeOutlined />,
-    },
-    {
       key: 2,
       label: "Work Me",
-      path: "/me",
+      path: "/home/me",
       icon: <UserOutlined />,
     },
     {

@@ -28,15 +28,19 @@ function Login(props: LoginProps) {
     console.log(value);
 
     const response = await login(value);
-    if (response.data.status === 200) {
+    if (response?.data?.status === 200) {
       setLoading(false);
       setOpenLogin(false);
-      console.log(response.data);
+      console.log(response.data.user.role);
       if (localStorage.getItem("id_user")) {
         localStorage.removeItem("id_user");
       }
       localStorage.setItem("id_user", response.data.user.id);
-      navigate("/home");
+      if (response.data.user.role === "SUPPERADMIN") {
+        navigate("/supper-admin");
+      } else {
+        navigate("/home/me");
+      }
     } else {
       openCustomNotificationWithIcon(
         "error",

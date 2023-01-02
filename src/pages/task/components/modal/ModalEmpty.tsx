@@ -53,7 +53,6 @@ function AddTask(props: any) {
       userManager: userManager ? userManager?.id : null,
       start_Time: startTime,
       end_Time: endTime,
-      private: value.private,
       thumbnail: thumbnail,
     };
     console.log(dataSubmit);
@@ -179,12 +178,6 @@ function AddTask(props: any) {
           name="estimate"
         >
           <RangePicker />
-        </Form.Item>
-        <Form.Item
-          label={<div className="min-w-[115px]">riêng tư</div>}
-          name="private"
-        >
-          <Switch />
         </Form.Item>
         <Form.Item
           label={<div className="min-w-[115px]">desription</div>}

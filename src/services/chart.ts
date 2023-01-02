@@ -5,3 +5,9 @@ export async function getChartItem(id: number) {
     method: "GET",
   });
 }
+
+export async function getFullStatistic() {
+  return request(`/chart/statistic/full`, {
+    method: "GET",
+  });
+}

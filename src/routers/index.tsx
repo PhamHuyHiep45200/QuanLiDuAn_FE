@@ -17,6 +17,7 @@ import GroupSupperAdmin from "../pages/supper-admin/GroupSupperAdmin";
 import MemberSupperAdmin from "../pages/supper-admin/MemberSupperAdmin";
 import ItemSupperAdmin from "../pages/supper-admin/ItemSupperAdmin";
 import ChangePassWord from "../pages/auth/forgot-password/ForgotPassWord";
+import DashBoard from "../pages/supper-admin/DashBoard";
 // interface Router {
 //   path: string;
 //   component: () => JSX.Element;
@@ -34,6 +35,10 @@ const routers = [
     path: "/supper-admin",
     component: SupperAdmin,
     children: [
+      {
+        path: "/supper-admin",
+        component: DashBoard,
+      },
       {
         path: "/supper-admin/project",
         component: ProjectSupperAdmin,
@@ -71,6 +76,14 @@ const routers = [
     component: Home,
     children: [
       {
+        path: "/home/me",
+        component: WorkMeHome,
+      },
+      {
+        path: "/home/me/:id",
+        component: WorkMeTask,
+      },
+      {
         path: "/home/notifycations",
         component: NotifyCations,
       },
@@ -91,7 +104,7 @@ const routers = [
         component: ListMember,
       },
       {
-        path: "/home/calender",
+        path: "/home/calendar/:id",
         component: Calender,
       },
       {

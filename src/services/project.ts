@@ -31,6 +31,12 @@ export async function getNotifycations(id_user: number) {
   });
 }
 
+export async function updateProject(id_project: number, data: any) {
+  return request(`/project/update/${id_project}`, {
+    method: "PUT",
+    data,
+  });
+}
 export async function updateDeleteProject(id_project: number, data: any) {
   return request(`/project/delete/${id_project}`, {
     method: "PUT",

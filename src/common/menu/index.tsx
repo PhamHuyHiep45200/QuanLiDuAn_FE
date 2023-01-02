@@ -14,7 +14,7 @@ import {
 import {
   DeploymentUnitOutlined,
   FolderFilled,
-  TeamOutlined,
+  DropboxOutlined,
   PlusOutlined,
   FileWordOutlined,
 } from "@ant-design/icons";
@@ -48,7 +48,7 @@ const Add = ({ id, type }: any) => {
     setOpen(false);
   };
   const handleSubmit = async (value: any) => {
-    const id_user: string | null = localStorage.getItem("id_user");
+    const id_user: any = localStorage.getItem("id_user");
     if (typeSpace) {
       const dataSubmit = {
         name: value.name,
@@ -70,6 +70,7 @@ const Add = ({ id, type }: any) => {
           id_project: id,
           id_user: id_user ? +id_user : null,
           name: value.name,
+          personCreate: +id_user,
           startDate: value.date[0].toISOString(),
           endDate: value.date[1].toISOString(),
         };
@@ -89,6 +90,7 @@ const Add = ({ id, type }: any) => {
         const dataSubmit = {
           id_group: id,
           id_user: id_user ? +id_user : null,
+          personCreate: +id_user,
           name: value.name,
           startDate: value.date[0].toISOString(),
           endDate: value.date[1].toISOString(),
@@ -190,7 +192,7 @@ const getData = (array: any) => {
             },
             ...arrayDocument,
             {
-              label: "List member",
+              label: "Quản lí",
               key: `member_${arr.typeName}_${arr.id}`,
               router: `/home/project/list-member/${arr.id}`,
             },
@@ -199,7 +201,7 @@ const getData = (array: any) => {
         : [];
     }
     if (arr?.typeName === "group") {
-      arr["label"] = getLabel(arr, <TeamOutlined />);
+      arr["label"] = getLabel(arr, <DropboxOutlined />);
       arr["key"] = `${arr.id + arr.typeName}`;
       arr["children"] = arr?.Item
         ? [
@@ -208,7 +210,7 @@ const getData = (array: any) => {
               key: `add_${arr.typeName}_${arr.id}`,
             },
             {
-              label: "List member",
+              label: "Quản lí",
               key: `member_${arr.typeName}_${arr.id}`,
               router: `/home/group/list-member/${arr.id}`,
             },

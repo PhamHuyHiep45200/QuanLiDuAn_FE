@@ -13,10 +13,10 @@ export async function getTaskAll(id: number, params?: any) {
     params,
   });
 }
-export async function updateTask(id: number, params: any) {
+export async function updateTask(id: number, data: any) {
   return request(`/task/update/${id}`, {
     method: "PUT",
-    params,
+    data,
   });
 }
 export async function deleteTask(id: number) {

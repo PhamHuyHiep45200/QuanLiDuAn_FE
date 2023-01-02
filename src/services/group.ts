@@ -20,6 +20,12 @@ export async function getGroupInProject(id: number) {
   });
 }
 
+export async function updateGoup(id_group: number, data: any) {
+  return request(`/group/update/${id_group}`, {
+    method: "PUT",
+    data,
+  });
+}
 export async function updateDeleteGroup(id_group: number, data: any) {
   return request(`/group/delete/${id_group}`, {
     method: "PUT",

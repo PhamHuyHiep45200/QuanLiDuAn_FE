@@ -39,7 +39,7 @@ function App() {
     if (id_user) {
       getInfo(+id_user);
     }
-  });
+  }, []);
   const getInfo = async (id: number) => {
     const response = await getOneUser(+id);
     if (response.data.status === 200) {
@@ -50,9 +50,7 @@ function App() {
       openCustomNotificationWithIcon("error", "get userprovider", "error");
     }
   };
-  const data = React.useMemo(() => {
-    return { user, setUser };
-  }, [user]);
+  const data = { user, setUser };
   return (
     <ContextProvider.Provider value={data}>
       <ContextSocketProvider value={socket}>

@@ -38,6 +38,13 @@ export async function searchUserQuery(id: number, params: any) {
   });
 }
 
+export async function updateItem(id_item: number, data: any) {
+  return request(`/item/update/${id_item}`, {
+    method: "PUT",
+    data,
+  });
+}
+
 export async function updateDeleteItem(id_item: number, data: any) {
   return request(`/item/delete/${id_item}`, {
     method: "PUT",

@@ -67,7 +67,7 @@ function Chart() {
                     </Text>
                   </div>
                 </div>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mt-[10px]">
                   <div className="flex flex-col">
                     <Text type="danger" className="font-medium">
                       {chart.data.count - chart.data.done}
